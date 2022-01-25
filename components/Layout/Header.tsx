@@ -42,7 +42,7 @@ const Header = () => {
         <input
           type="text" 
           className='bg-transparent h-[30px] text-xs border-secondary rounded-md placeholder-white placeholder-opacity-50 text-white focus:ring-0' 
-          placeHolder="Placehoder..."
+          placeholder="Placehoder..."
         />
 
       </div>
