@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components {
+  .avatar {
+    @apply w-[36px] h-[36px] rounded-full object-cover relative overflow-hidden
+  }
+
+  body {
+    @apply overflow-x-hidden font-sans
+  }
+
+  .cleanInput {
+    @apply border-0 focus:border-0 focus:ring-0 bg-transparent 
+  }
+
+  .google_button {
+    @apply p-2 px-4 rounded-md mt-2 active:scale-90 shadow-green-400 shadow text-white bg-green-600 hover:bg-green-700 transition-all duration-200 cursor-pointer
+  }
+
+  .message {
+    @apply flex items-center gap-3 p-3 transition-all duration-300 hover:bg-gray-100 cursor-pointer
+  }
+
+}
