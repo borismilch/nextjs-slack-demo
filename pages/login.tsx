@@ -6,7 +6,7 @@ import { signInWithPopup } from 'firebase/auth'
 
 import { useNavigation } from '@/hooks/.'
 
-const login = () => {
+const Login = () => {
 
   const {pushRouter} = useNavigation()
 
@@ -52,4 +52,4 @@ const login = () => {
   )
 };
 
-export default login;
+export default Login;
