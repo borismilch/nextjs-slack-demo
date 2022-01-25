@@ -15,7 +15,7 @@ const login = () => {
 
     signInWithPopup(auth, googleProvider)
       .catch(e => console.log(e.message))
-      .then(res => pushRouter('/'))
+      .then(result => pushRouter('/'))
   }
 
   return (
