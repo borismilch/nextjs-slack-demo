@@ -45,7 +45,7 @@ const ChatForm: React.FC<{channelName: string}> = ({channelName}) => {
       <input 
         {...bind} 
         type="text" 
-        placeHolder="Send a message..." 
+        placeholder="Send a message..." 
         className = 'cleanInput text-sm h-[30px] flex-grow'
       />
 
