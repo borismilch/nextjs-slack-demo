@@ -1,4 +1,4 @@
-
+import User from './types'
 import useUploadDataReult from "./hooks/IuseUploadDataReult";
 import uerInputValueArr from './hooks/IsuerInputValueArr'
 import UserInput from "./userInterfaces/IUserInput";
@@ -12,3 +12,4 @@ export interface IUserInput extends UserInput {}
 export interface ISidebarItem extends SidebarItem {}
 export interface IChannelItem extends ChannelItem {}
 export interface IMessage extends Message {}
+export interface IUser extends User {}
