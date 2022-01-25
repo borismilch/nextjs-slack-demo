@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 
 import { ISidebarItem } from '@/models/.';
 
-const SidebarItem:React.FC<{sidebarItem: ISidebarItem, Icon: any}> = ({sidebarItem: { text, onClick }, Icon}) => {
+const SidebarItem:React.FC<{sidebarItem: ISidebarItem, Icon: ReactElement<any, any>}> = ({sidebarItem: { text, onClick }, Icon}) => {
   return (
     <div 
       onClick={onClick ? onClick.bind(null) : null}
