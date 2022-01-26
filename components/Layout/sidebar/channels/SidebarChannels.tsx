@@ -39,8 +39,9 @@ const SidebarChannels: React.FC<{channels: ISidebarItem[]}> = ({channels}) => {
         >
 
         <div className="flex flex-col px-4">
-          {channels.map(item => (
+          {channels?.map(item => (
             <SidebarItem 
+              key={item.id}
               sidebarItem={{text: item.text, onClick: () => RoomStore.setCurrentRoom(item.id) }}
               Icon={<HiHashtag className='text-white text-opacity-50 ' />}
             />

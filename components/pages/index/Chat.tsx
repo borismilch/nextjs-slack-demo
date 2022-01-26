@@ -12,9 +12,9 @@ const Chat = () => {
   const [room, loading, error] = useDocument(doc(collection(firestore, 'rooms'), RoomStore.roomId))
 
   return (
-    <div className='flex flex-col w-screen'>
+    <div className='flex flex-col w-screen relative'>
 
-      <ChatHeader />
+      <ChatHeader room={{name: room?.data()?.name}} />
 
       <div className='flex-grow'>
         { loading ? <p>Loading...</p> : (
@@ -22,7 +22,11 @@ const Chat = () => {
         ) }
       </div>
 
-      {!loading && <ChatForm channelName={room.data().name} />}
+      {!loading && 
+        <div className='absolute bottom-0 w-full'>
+          <ChatForm />
+        </div>
+      }
   
     </div>
   )

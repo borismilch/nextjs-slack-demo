@@ -19,7 +19,7 @@ const SidebarItems: React.FC = () => {
     },
 
     {
-      text: 'Reactions and Anwears',
+      text: 'Reactions and ',
       Icon: <BiDotsVerticalRounded className="text-white" />
     },
   ]
@@ -29,7 +29,7 @@ const SidebarItems: React.FC = () => {
 
     {
       sidebarItems.map(item => (
-        <SidebarItem sidebarItem={{text: item.text}} Icon={item.Icon} />
+        <SidebarItem key={item.text} sidebarItem={{text: item.text}} Icon={item.Icon} />
       ))
     }
 

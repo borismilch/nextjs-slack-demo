@@ -1,17 +1,24 @@
+
+import {IRoom} from '@/models/.';
 import React from 'react';
 import { BiInfoCircle } from 'react-icons/bi'
 import { FaStarOfDavid } from 'react-icons/fa'
-import { FaSlackHash } from 'react-icons/fa'
+import { HiOutlineHashtag } from 'react-icons/hi'
 
-const ChatHeader = () => {
+import {ChatsLinksHeader} from '..'
+
+const ChatHeader: React.FC<{room: IRoom}> = ({room}) => {
+
   return (
-    <div className='p-[10px] py-[4px] flex-grow-0 flex items-center justify-between w-full border-b  border-gray-300'>
+    <div className='flex flex-col '>
+
+      <div className='p-[15px] py-[6px] flex-grow-0 flex items-center justify-between w-full border-b  border-gray-300'>
 
       <div className='flex items-center gap-2'>
 
-        <FaSlackHash className='text-opacity-50 text-xl' />
+        <HiOutlineHashtag className='text-opacity-50 ' />
 
-        <p className="font-medium">Room name</p>
+        <p className="font-medium">{room.name}</p>
 
         <FaStarOfDavid className='text-opacity-50 text-xl' />
 
@@ -25,7 +32,12 @@ const ChatHeader = () => {
 
       </div>
 
+      </div>
+
+      <ChatsLinksHeader />
+
     </div>
+
   )
 };
 

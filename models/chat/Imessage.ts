@@ -7,4 +7,6 @@ export default interface IMessage {
   username: string 
   role: string 
   userId: string
+  id: string
+  adressat?: string
 }

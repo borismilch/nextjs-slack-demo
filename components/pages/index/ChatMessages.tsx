@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useCollectionData } from 'react-firebase-hooks/firestore'
+import { useCollection, useCollectionData } from 'react-firebase-hooks/firestore'
 import { observer } from 'mobx-react-lite'
 
 import { RoomStore } from '@/store/.'
@@ -20,7 +20,7 @@ const ChatMessages: React.FC = () => {
 
   const messagesRef = collection(firestore, 'rooms', RoomStore.roomId, 'messages')
 
-  const [messages, loading] = useCollectionData(query(messagesRef, orderBy('createdAt'))) 
+  const [messages, loading] = useCollection(query(messagesRef, orderBy('createdAt'))) 
 
   const boxRef = useRef<HTMLDivElement>(null) 
 
@@ -40,12 +40,13 @@ const ChatMessages: React.FC = () => {
   return  (
     <div
       ref={boxRef}
-      className="flex flex-col overflow-auto scrollbar-thin max-h-[79vh]">
+      className="flex flex-col overflow-auto pb-10 scrollbar-thin max-h-[74vh]">
 
     {
-      messages.map((message: IMessage) => (
+      messages?.docs?.map((message) => (
         <Message 
-          message={message}
+          key={message.id}
+          message={{...message.data(), id: message.id } as IMessage}
         />
       ))
     }

@@ -5,6 +5,8 @@ import UserInput from "./userInterfaces/IUserInput";
 import SidebarItem from './utils/ISidebarItem'
 import ChannelItem from './utils/ISidebarItem'
 import Message from './chat/Imessage'
+import Room  from './chat/IChat'
+import Reaction from './chat/Ireaction'
 
 export interface IuseUploadDataReult extends useUploadDataReult {}
 export interface IuserInputValueArr extends uerInputValueArr {}
@@ -13,3 +15,7 @@ export interface ISidebarItem extends SidebarItem {}
 export interface IChannelItem extends ChannelItem {}
 export interface IMessage extends Message {}
 export interface IUser extends User {}
+export interface IRoom extends Room {} 
+export interface IReaction extends Reaction {}
+export interface IDropItem extends SidebarItem {}
+export interface IAnswear extends IMessage {}

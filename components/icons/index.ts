@@ -5,4 +5,21 @@ export { BsChatDots } from 'react-icons/bs'
 export {BiDotsVerticalRounded} from 'react-icons/bi'
 export {MdOutlineArrowDropDown } from 'react-icons/md'
 
-export {HiHashtag} from 'react-icons/hi'
+export {HiHashtag, HiOutlinePlusSm, HiOutlineEmojiHappy, HiLink} from 'react-icons/hi'
+
+export { AiFillCaretDown } from 'react-icons/ai'
+
+export { IoIosSend } from 'react-icons/io'
+
+export {MdOutlineAlternateEmail} from 'react-icons/md'
+
+export {BiImage} from 'react-icons/bi'
+
+export { MdOutlineAddReaction, MdOutlineClose } from 'react-icons/md'
+
+export { BsThreeDotsVertical } from 'react-icons/bs'
+
+export { BsFillChatRightTextFill } from 'react-icons/bs'
+
+
+export {default as default }  from './AppIcon'

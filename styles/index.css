@@ -4,6 +4,10 @@
 
 
 @layer components {
+
+  .marker {
+    @apply p-1 text-blue-500 hover:text-blue-600 transition-all duration-200 bg-yellow-200 rounded mr-1
+  }
   .avatar {
     @apply w-[36px] h-[36px] rounded-full object-cover relative overflow-hidden
   }
@@ -13,7 +17,7 @@
   }
 
   .cleanInput {
-    @apply border-0 focus:border-0 focus:ring-0 bg-transparent 
+    @apply border-0 focus:border-0 focus:ring-0 bg-transparent focus:border-transparent
   }
 
   .google_button {
@@ -21,7 +25,39 @@
   }
 
   .message {
-    @apply flex items-center gap-3 p-3 transition-all duration-300 hover:bg-gray-100 cursor-pointer
+    @apply flex items-start gap-3 p-3 transition-all duration-300 hover:bg-gray-100 cursor-pointer
+  }
+
+  .message_form {
+    @apply p-1 m-2 bg-transparent flex items-center pr-6 border-gray-400 border-2 rounded-xl bg-gray-50 transition-all duration-200
+  }
+
+  .button_item {
+    @apply px-2 p-1  h-full flex border-l border-white items-center bg-green-800 transition-all duration-200 hover:opacity-75 disabled:opacity-40
+  }
+
+  .tooltip {
+    @apply bg-gray-900 text-white font-medium text-sm rounded-lg absolute opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200  p-2 py-2 whitespace-nowrap
+  }
+
+  .tooltip-top {
+    @apply -top-10 -left-5
+  }
+
+  .emoji {
+    @apply text-2xl flex items-center justify-center  p-2 rounded-lg transition-all cursor-pointer active:scale-90 duration-200 hover:bg-gray-200
+  }
+
+  .tooltip-bottom {
+    @apply -bottom-12 
+  }
+
+  .small_avatar {
+    @apply w-[27px] h-[27px] rounded-md overflow-hidden drop-shadow transition-all duration-200 hover:opacity-80 relative
+  }
+
+  .answear_link {
+    @apply text-xs hover:underline text-blue-600 hover:text-blue-700 transition-all duration-200 cursor-pointer font-semibold
   }
 
 }

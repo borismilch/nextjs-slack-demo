@@ -6,8 +6,8 @@ import { motion } from 'framer-motion'
 export default function MyApp({ Component, pageProps, router }) {
   return (
     <>
-      <Head children ={(
-        <>
+      <Head >
+       <>
           <meta charSet="utf-8" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
           <meta
@@ -34,7 +34,7 @@ export default function MyApp({ Component, pageProps, router }) {
           <link rel="apple-touch-icon" href="/apple-icon.png"></link>
           <meta name="theme-color" content="#317EFB" />
         </>
-      )} />
+      </Head>
 
       <motion.div
         key={router.route}

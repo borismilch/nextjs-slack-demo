@@ -1,21 +1,41 @@
 import React, { SyntheticEvent } from 'react';
 import Image from 'next/image'
 
-import { auth, googleProvider } from '@/lib/firebase'
+import { auth, googleProvider, firestore } from '@/lib/firebase'
 import { signInWithPopup } from 'firebase/auth'
 
 import { useNavigation } from '@/hooks/.'
 
+import { doc, getDoc, setDoc } from 'firebase/firestore'
+
 const Login = () => {
 
   const {pushRouter} = useNavigation()
+
+  const checkUser = async (userId: string, payload) => {
+    console.log(payload)
+    let user
+         
+    try {
+      user = await getDoc(doc(firestore, 'users', userId))
+      console.log(user.data())
+    } catch {}
+
+    if (user.data()) { return }
+
+    const {displayName, email, photoURL, uid} = payload
+
+    await setDoc(doc(firestore, 'users', uid), {displayName, email, photoURL, uid})
+
+    console.log('bone')
+  }
 
   const signIn = (e: SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
     signInWithPopup(auth, googleProvider)
       .catch(e => console.log(e.message))
-      .then(result => pushRouter('/'))
+      .then((result: any) => {checkUser(result.user.uid, result.user ), console.log(result.user); pushRouter('/')})
   }
 
   return (
