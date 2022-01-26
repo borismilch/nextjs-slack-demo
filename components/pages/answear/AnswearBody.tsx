@@ -25,7 +25,7 @@ const AswearBody: React.FC<{message: IMessage}> = ({message}) => {
 
         {
           asnwears?.docs.map(doc => (
-            <Message isAnswear showAnswears={false} message={{...doc.data(), id: doc.id} as IMessage} />
+            <Message key={doc.data().id} isAnswear showAnswears={false} message={{...doc.data(), id: doc.id} as IMessage} />
           ))
         }
 
