@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useCollection, useCollectionData } from 'react-firebase-hooks/firestore'
+import { useCollection } from 'react-firebase-hooks/firestore'
 import { observer } from 'mobx-react-lite'
 
 import { RoomStore } from '@/store/.'
@@ -15,6 +15,9 @@ import { IMessage } from '@/models/.';
 
 import { useEffect, useRef } from 'react'
 import { orderBy, query } from 'firebase/firestore'
+
+import { Slider } from '@/components/Layout/slider'
+import { GalleryStore } from '@/store/.'
 
 const ChatMessages: React.FC = () => {
 
@@ -50,6 +53,8 @@ const ChatMessages: React.FC = () => {
         />
       ))
     }
+
+      {(GalleryStore.images.length > 0) && <Slider />}
 
     </div>
   )

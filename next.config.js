@@ -7,6 +7,6 @@ module.exports = withPWA({
     runtimeCaching,
   },
   images: {
-    domains: ['static.xx.fbcdn.net', "lh3.googleusercontent.com", "cdn.mos.cms.futurecdn.net"]
+    domains: ['static.xx.fbcdn.net', "lh3.googleusercontent.com", "cdn.mos.cms.futurecdn.net", "firebasestorage.googleapis.com"]
   }
 })

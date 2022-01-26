@@ -8,6 +8,7 @@ import { useDocument } from 'react-firebase-hooks/firestore';
 import { firestore } from '@/lib/firebase'
 import { collection, doc } from 'firebase/firestore'
 
+
 const Chat = () => {
   const [room, loading, error] = useDocument(doc(collection(firestore, 'rooms'), RoomStore.roomId))
 

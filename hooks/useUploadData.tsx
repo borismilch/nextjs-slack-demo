@@ -52,11 +52,19 @@ const useUploadData:(path: string) => IuseUploadDataReult = (path = 'posts/image
 
     setLoading(true)
 
+    console.log('still here')
+
     const fileRef = ref(storage, path + (Math.random().toString(36).substring(2, 12) + Date.now().toString()))
+
+    console.log('Afrer ref')
 
     await uploadString(fileRef, dataUrl, 'data_url')
 
+    console.log('After Upload')
+
     const url = await getDownloadURL(fileRef)
+
+    console.log('After gettimg url')
 
     setUrl(url)
 

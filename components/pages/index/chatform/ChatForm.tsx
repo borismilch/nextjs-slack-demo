@@ -17,6 +17,8 @@ import { useToggle } from '@/hooks/.'
 import { ChatFormActions } from '..'
 import { MediaStore } from '@/store/.'
 
+import {ChatMediaForm} from '.'
+
 import dynamic from 'next/dynamic'
 import IUser from '@/models/types';
 
@@ -34,18 +36,20 @@ const ChatForm: React.FC<{updateId?: string}> = ({updateId}) => {
 
   const sendMessage = async (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
-    if (!value) { return }
+    if (!value && !MediaStore.images.length) { return }
     cleanValue()
 
     const message = {
       createdAt: serverTimestamp(),
-      body: value,
+      body: MediaStore.images.length ? MediaStore.images.slice().map(item => ({id: item.id, url: item.url})) : value,
       userImage: user?.photoURL,
       username: user?.displayName,
-      role: 'text',
+      role: MediaStore.images.length ? 'image': 'text',
       userId: user?.uid,
       adressat: adressat || ''
     }
+
+    console.log(message)
 
     if (updateId) {
       const messageRef = collection(firestore, 'rooms', RoomStore.roomId, 'messages', updateId, 'answears')
@@ -59,6 +63,7 @@ const ChatForm: React.FC<{updateId?: string}> = ({updateId}) => {
     }
 
     setAdressat('')
+    MediaStore.cleanImages()
   }
 
   const addAdressat = () => {
@@ -79,30 +84,37 @@ const ChatForm: React.FC<{updateId?: string}> = ({updateId}) => {
   return (
     <form onSubmit={sendMessage.bind(null)}>
 
-      <div className={'message_form flex-col mb-4 ' + (updateId && 'bg-white')}>
+    <div className={'message_form mb-4 items-end '  + (updateId && 'bg-white ')}
+      style={{flexDirection: MediaStore.files.length ? 'row' : "column"}}
+    >
     
-      <input 
+      { !(MediaStore.files.length > 0) ? <input 
         {...bind} 
         type="text" 
         placeholder="Send a message..." 
         className = 'cleanInput text-sm h-[30px] w-full mr-auto flex-grow'
-      />
+      /> : <ChatMediaForm  /> }
+
+      <input type="text" hidden />
 
       <div className='flex w-full relative justify-between'>
 
-        <ChatFormActions
-          cb2={changeOpen.bind(null, !open)}
-          cb4={MediaStore.toggleControll}
-          cb3={addAdressat.bind(null)}
-         />
+        {!(MediaStore.files.length > 0) && <>
+          <ChatFormActions
+              cb2={changeOpen.bind(null, !open)}
+              cb3={addAdressat.bind(null)}
+          />
+          
+          <div 
+            className={'absolute -top-[280px] left-0 transition-all duration-300 ' + (open ? 'opacity-100 visible' : 'opacity-0 hidden')}>
+            <EmojiPicker changeValue={(val: string) => changeValue(value + val)} />
+          </div>
+        </>}
 
-        <div 
-          className={'absolute -top-[280px] left-0 transition-all duration-300 ' + (open ? 'opacity-100 visible' : 'opacity-0 hidden')}>
-          <EmojiPicker changeValue={(val: string) => changeValue(value + val)} />
-        </div>
+        {MediaStore.files.length > 0 && <div></div> }
 
         <ButtonGroup 
-          disabled={!value}
+          disabled={(MediaStore.files.length ? (MediaStore.files.length > MediaStore.images.length) : !value)}
           onClickFirst={sendMessage.bind(null)}
           onClickSecond={() => {}}
         />

@@ -5,12 +5,12 @@ import { getAuth, GoogleAuthProvider } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDz1FFMK2hjvOAx1Pe7tGHNBcnvMEgW4aY",
-  authDomain: "slack-ddd.firebaseapp.com",
-  projectId: "slack-ddd",
-  storageBucket: "slack-ddd.appspot.com",
-  messagingSenderId: "1036924399209",
-  appId: "1:1036924399209:web:9e5db564ffca3f916e3cf8"
+  apiKey: "AIzaSyChIXPArasxixlaYEpEcNyTXlEZbxV3b7w",
+  authDomain: "builo-tube.firebaseapp.com",
+  projectId: "builo-tube",
+  storageBucket: "builo-tube.appspot.com",
+  messagingSenderId: "327334058483",
+  appId: "1:327334058483:web:ea58de9141b30905295a86"
 };
 
 // Initialize Firebase

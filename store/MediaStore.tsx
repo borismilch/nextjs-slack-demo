@@ -1,10 +1,14 @@
 import { makeAutoObservable } from 'mobx'
+import { Ref } from 'react'
 
 class SendingImagesStore {
 
   images: {url: string, id: number}[] = []
+  files: File[] = [] as File[]
+
+  fileInputRef: Ref<HTMLInputElement> = null 
+
   canUpload: boolean = false as boolean
-  controll: boolean = false 
 
   constructor() {
     makeAutoObservable(this)
@@ -19,18 +23,19 @@ class SendingImagesStore {
     this.images.push({url, id: Date.now()})
   }
 
-  removeImage (id: number) {
-    this.images = this.images.filter(item => item.id !== id)
+  removeImage (idx: number) {
+    this.images = this.images.filter((item, i) =>  i !== idx)
+    this.files = this.files.filter((item, i) => i !== idx)
+
   }
 
   cleanImages () {
     this.images = []
+    this.files = []
   }
 
-  toggleControll () {
-
-    this.controll = !this.controll
-    console.log(this.controll)
+  addFile (file: File) {
+    this.files.push(file)
   }
 
 } 

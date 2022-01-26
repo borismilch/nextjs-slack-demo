@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { HiOutlineEmojiHappy, HiOutlinePlusSm, BiImage, MdOutlineAlternateEmail } from '@/components/icons/.' 
 
@@ -6,7 +6,22 @@ import AppIcon from '@/components/icons'
 import { observer } from 'mobx-react-lite';
 import { MediaStore } from '@/store/.'
 
+import { useRef } from 'react'
+
 const ChatFormActions: React.FC<{cb1?: () => void, cb2?: () => void, cb3?: () => void, cb4?: () => void}> = ({cb2, cb1, cb3, cb4}) => {
+
+  const fileRef = useRef<HTMLInputElement>(null)
+
+  const changeFile = () => {
+    const file = fileRef?.current?.files[0]
+
+    if (file) MediaStore.addFile(file)
+  }
+
+  const triggerInput = () => {
+    fileRef?.current?.click()
+  }
+
   return (
     <div className='flex items-center '>
 
@@ -28,16 +43,18 @@ const ChatFormActions: React.FC<{cb1?: () => void, cb2?: () => void, cb3?: () =>
       />
 
       <div 
-        onClick={() => MediaStore.toggleControll()}
+        onClick={triggerInput.bind(null)}
       >
 
-      <AppIcon 
-        Icon={<BiImage className='text-gray-600 text-xl' />}
-        tooltip={['send image', 'tooltip-top']}
-      />
-
+        <AppIcon 
+          Icon={<BiImage className='text-gray-600 text-xl' />}
+          tooltip={['send image', 'tooltip-top']}
+        />
 
       </div>
+
+      <input type="file" hidden ref={fileRef} onChange={changeFile} />
+
     </div>
   )
 };

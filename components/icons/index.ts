@@ -21,5 +21,7 @@ export { BsThreeDotsVertical } from 'react-icons/bs'
 
 export { BsFillChatRightTextFill } from 'react-icons/bs'
 
+export { IoMdClose } from 'react-icons/io'
+
 
 export {default as default }  from './AppIcon'
