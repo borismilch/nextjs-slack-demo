@@ -1,14 +1,17 @@
 import React, { useEffect } from 'react';
 import { SidebarHeader, SidebarItems, SidebarChannels, SidebarItem } from '.'
 
-import {addDoc, collection, DocumentData} from 'firebase/firestore'
+import {addDoc, collection} from 'firebase/firestore'
 import { firestore } from '@/lib/firebase';
 
-import {HiHashtag, HiPlusSm} from 'react-icons/hi'
+import {HiPlusSm} from 'react-icons/hi'
+
+import { observer } from 'mobx-react-lite'
 
 import { useCollection } from 'react-firebase-hooks/firestore'
 import { ISidebarItem } from '@/models/.';
 import { useState } from 'react'
+import {SidebarStore} from '@/store/.';
 
 const Sidebar = () => {
 
@@ -25,15 +28,18 @@ const Sidebar = () => {
     
   }
 
-  useEffect(() => {
-    console.log(channels?.docs?.map(doc => doc.data()))
+  const closeSidebar = () => {
+    SidebarStore.changeOpen(false)
+  }
 
+  useEffect(() => {
     setMyChannels(channels?.docs?.map(doc =>( {text: doc.data().name, id: doc.id} )))
   }, [channels])
 
   return (
-    <div className='flex flex-col bg-[#3F0E40] flex-[0.3] max-w-[260px]'>
-      
+    <>
+    <div className={'sidebar ' + (SidebarStore.open && 'transform translate-x-0')}>
+
       <SidebarHeader />
 
       <SidebarItems  />
@@ -51,7 +57,16 @@ const Sidebar = () => {
       />
 
     </div>
+
+   { SidebarStore.open && <div 
+      onClick={closeSidebar}
+      className='
+        inset-0 bg-black bg-opacity-60 w-screen h-screen absolute transition-all duration-300 z-30 flex md:hidden
+    '/>
+   }
+
+    </>
   )
 };
 
-export default Sidebar;
+export default observer(Sidebar);

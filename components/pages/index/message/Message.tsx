@@ -26,9 +26,9 @@ const Message: React.FC<{message: IMessage, showAnswears?: boolean, isAnswear?: 
   const [user] = useAuthState(auth)
 
   return (
-    <div className={'message rounded-md mb-3 relative group mx-0 ' + (user?.uid === message.userId && ' mx-3 bg-gray-50')}>
+    <div className={'message rounded-md mb-3 relative group  mx-0 ' + (user?.uid === message.userId && ' mx-3 bg-gray-50')}>
 
-      <div className='avatar rounded'>
+      <div className='avatar hidden rounded md:flex'>
         <Image 
           src={message.userImage}
           layout='fill'
@@ -48,7 +48,7 @@ const Message: React.FC<{message: IMessage, showAnswears?: boolean, isAnswear?: 
           
            message.role === 'video' ?
            (<VideoMessageContent message={message as any} />) :
-           
+
            message.role === 'document' ? 
            ( <DocumentMessageContent message={message as any} /> ) :
 

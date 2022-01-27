@@ -3,7 +3,7 @@ import React from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore'
 import { observer } from 'mobx-react-lite'
 
-import { RoomStore } from '@/store/.'
+import { RoomStore, SidebarStore } from '@/store/.'
 import { firestore } from '@/lib/firebase'
 
 import { collection } from 'firebase/firestore'
@@ -37,6 +37,10 @@ const ChatMessages: React.FC = () => {
     })
 
   }, [messages])
+
+  useEffect(() => {
+    SidebarStore.changeOpen(false)
+  }, [RoomStore.roomId])
 
   if (loading) { return <p>Loading...</p> }
 

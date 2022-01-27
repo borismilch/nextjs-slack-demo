@@ -18,9 +18,6 @@ const ChatFormActions: React.FC<{cb1?: () => void, cb2?: () => void, cb3?: () =>
 
   const changeFile = () => {
     const file = fileRef?.current?.files[0]
-
-    console.log(file)
-
     if (file) MediaStore.addFile(file)
   }
 
@@ -34,6 +31,7 @@ const ChatFormActions: React.FC<{cb1?: () => void, cb2?: () => void, cb3?: () =>
       <AppIcon 
         Icon={<HiOutlinePlusSm className='text-gray-600 text-xl' />}
         tooltip={['more actions', 'tooltip-top']}
+        classes='hidden md-block'
       />
 
       <AppIcon 

@@ -65,7 +65,7 @@ const ChatForm: React.FC<{updateId?: string}> = ({updateId}) => {
 
     setAdressat('')
     MediaStore.cleanImages()
-    MediaStore.cleanDocuments()
+    MediaStore.cleanDocuments(  )
 
     MediaStore.isVideo = false 
     MediaStore.isDocuments = false

@@ -40,7 +40,7 @@ const Slider = () => {
 
             <div className='inline-block' key={item.url}>
                 <AnimatePresence>
-                 {<img
+                 {<img  
                     src={item.url}
                     className={'absolute opacity-0 ' + (GalleryStore.selectedImage === idx && "relative opacity-100 visible")}
                     style={{opacity: GalleryStore.selectedImage === idx ? 1 : 0}}

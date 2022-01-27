@@ -2,16 +2,30 @@ import { dayts } from '@/lib/dayts';
 import React from 'react';
 import { IMessage } from '@/models/.'
 
+import Image from 'next/image'
+
 const MessageHeader: React.FC<{message: IMessage}> = ({message}) => {
   return (
-    <div className='flex items-center gap-2'>
+    <div className='flex md:py-2 gap-1 pb-2'>
 
-    <p className='text-xs font-semibold'>{message.username}</p>
+      <div className='avatar flex rounded md:hidden'>
+        <Image 
+          src={message.userImage}
+          layout='fill'
+          objectFit={'cover'}
+        />
+        
+      </div>
 
-    <p className={'text-xs ' + 'text-gray-500' }>
-    {dayts((message?.createdAt?.seconds * 1000) || Date.now()).fromNow()}</p>
-    
-  </div>
+      <div className='flex items-center gap-2 py-1'>
+
+      <p className='text-xs font-semibold'>{message.username}</p>
+
+      <p className={'text-xs ' + 'text-gray-500' }>
+      {dayts((message?.createdAt?.seconds * 1000) || Date.now()).fromNow()}</p>
+      
+      </div>
+   </div> 
   )
 };
 

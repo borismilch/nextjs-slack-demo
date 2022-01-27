@@ -20,7 +20,7 @@ const ButtonGroup: React.FC<{onClickFirst: () => void, onClickSecond: () => void
     <button 
       disabled={disabled}
       onClick={onClickSecond.bind(null)}
-      className='button_item border-opacity-60'>
+      className='button_item border-opacity-60 md:flex hidden'>
       <AiFillCaretDown  className="text-white text-sm" />
     </button>
   

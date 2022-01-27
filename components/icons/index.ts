@@ -23,5 +23,7 @@ export { BsFillChatRightTextFill } from 'react-icons/bs'
 
 export { IoMdClose } from 'react-icons/io'
 
+export { HiMenuAlt2 } from 'react-icons/hi'
+
 
 export {default as default }  from './AppIcon'
