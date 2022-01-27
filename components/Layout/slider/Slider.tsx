@@ -1,12 +1,8 @@
 import React, { SyntheticEvent, useEffect } from 'react';
-import Image from 'next/image'
 import { observer } from 'mobx-react-lite'
 
 import { GalleryStore } from '@/store/.'
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
-
-import ReactDom from 'react-dom'
-
 import {AnimatePresence, motion} from 'framer-motion'
 
 const Slider = () => {
@@ -42,10 +38,9 @@ const Slider = () => {
         {  
           GalleryStore.images.slice().map((item, idx) => (
 
-            <div className='inline-block'>
+            <div className='inline-block' key={item.url}>
                 <AnimatePresence>
                  {<img
-                    key={item.url}
                     src={item.url}
                     className={'absolute opacity-0 ' + (GalleryStore.selectedImage === idx && "relative opacity-100 visible")}
                     style={{opacity: GalleryStore.selectedImage === idx ? 1 : 0}}
@@ -70,3 +65,4 @@ const Slider = () => {
 };
 
 export default observer(Slider)
+

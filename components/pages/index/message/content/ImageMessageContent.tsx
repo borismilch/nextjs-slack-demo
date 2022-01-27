@@ -22,6 +22,7 @@ const ViewImage: React.FC<{message: ImageMessage}> = ({message}) => {
         message.body.slice(0, 4).map((image, idx) => (
           <div  
             onClick={selectForStore.bind(null, idx)}
+            key={image.id}
             className='message_img'>
             <Image
               src={image.url}

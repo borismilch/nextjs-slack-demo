@@ -27,13 +27,14 @@ const ChatMediaForm = () => {
       {
         MediaStore.isVideo ?  <SendVideo file={MediaStore.files[0]} /> :
         MediaStore.isDocuments ? 
-        
-        MediaStore.files.map(file => (
-          <SendDocument file={file} />
+
+        MediaStore.files.map((file, idx) => (
+          <SendDocument key={file.name + idx } file={file} />
         ))
          :
         MediaStore.files.map((file, idx) => (
           <SendImage 
+            key={file.name + idx }
             file={file}
             idx={idx}
           />

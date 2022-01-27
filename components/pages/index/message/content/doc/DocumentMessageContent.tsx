@@ -8,7 +8,7 @@ const DocumentMessageContent: React.FC<{message: IDocumentMessage}> = ({message}
     <div className='flex flex-col mt-2'>
       {
         message.body.map(doc => (
-          <DocumentMessage document={doc} />
+          <DocumentMessage key={doc.url} document={doc} />
         ))
       }
     </div>
