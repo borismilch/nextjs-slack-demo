@@ -5,7 +5,7 @@ import { storage } from '../lib/firebase'
 import { ref, uploadString, getDownloadURL } from 'firebase/storage'
 import { IuseUploadDataReult } from '@/models/.'
 
-const useUploadData:(path: string) => IuseUploadDataReult = (path = 'posts/images/') => {
+const useUploadData:(path: string, ext?:string) => IuseUploadDataReult = (path = 'posts/images/', ext = '') => {
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const [dataUrl, setDataUrl] = useState<string>('')
@@ -49,22 +49,11 @@ const useUploadData:(path: string) => IuseUploadDataReult = (path = 'posts/image
   }
 
   const UploadFile =  async (dataUrl: string) => {
-
     setLoading(true)
-
-    console.log('still here')
-
-    const fileRef = ref(storage, path + (Math.random().toString(36).substring(2, 12) + Date.now().toString()))
-
-    console.log('Afrer ref')
+    const fileRef = ref(storage, path + (Math.random().toString(36).substring(2, 12) + Date.now().toString()) + ext)
 
     await uploadString(fileRef, dataUrl, 'data_url')
-
-    console.log('After Upload')
-
     const url = await getDownloadURL(fileRef)
-
-    console.log('After gettimg url')
 
     setUrl(url)
 

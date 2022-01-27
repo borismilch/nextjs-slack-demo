@@ -7,6 +7,7 @@ import ChannelItem from './utils/ISidebarItem'
 import Message from './chat/Imessage'
 import Room  from './chat/IChat'
 import Reaction from './chat/Ireaction'
+import Doc from './chat/IDocument'
 
 export interface IuseUploadDataReult extends useUploadDataReult {}
 export interface IuserInputValueArr extends uerInputValueArr {}
@@ -19,3 +20,5 @@ export interface IRoom extends Room {}
 export interface IReaction extends Reaction {}
 export interface IDropItem extends SidebarItem {}
 export interface IAnswear extends IMessage {}
+export interface IDocument extends Doc {}
+

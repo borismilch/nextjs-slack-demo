@@ -1,6 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { HiOutlineEmojiHappy, HiOutlinePlusSm, BiImage, MdOutlineAlternateEmail } from '@/components/icons/.' 
+
+import { AiFillYoutube } from 'react-icons/ai'
 
 import AppIcon from '@/components/icons'
 import { observer } from 'mobx-react-lite';
@@ -8,12 +10,16 @@ import { MediaStore } from '@/store/.'
 
 import { useRef } from 'react'
 
+import { IoDocumentText } from 'react-icons/io5'
+
 const ChatFormActions: React.FC<{cb1?: () => void, cb2?: () => void, cb3?: () => void, cb4?: () => void}> = ({cb2, cb1, cb3, cb4}) => {
 
   const fileRef = useRef<HTMLInputElement>(null)
 
   const changeFile = () => {
     const file = fileRef?.current?.files[0]
+
+    console.log(file)
 
     if (file) MediaStore.addFile(file)
   }
@@ -53,7 +59,31 @@ const ChatFormActions: React.FC<{cb1?: () => void, cb2?: () => void, cb3?: () =>
 
       </div>
 
+      
+      <div 
+        onClick={() => {triggerInput(); MediaStore.addVideo()}}
+      >
+
+        <AppIcon 
+          Icon={<AiFillYoutube className='text-gray-600 text-xl' />}
+          tooltip={['send Video', 'tooltip-top']}
+        />
+
+      </div>
+
       <input type="file" hidden ref={fileRef} onChange={changeFile} />
+
+
+      <div 
+        onClick={() => {triggerInput(); MediaStore.addDocument()}}
+      >
+
+        <AppIcon 
+          Icon={<IoDocumentText className='text-gray-600 text-xl' />}
+          tooltip={['send Documents', 'tooltip-top']}
+        />
+
+      </div>
 
     </div>
   )

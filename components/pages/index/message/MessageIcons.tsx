@@ -17,6 +17,8 @@ import {DropList} from '@/components/forms'
 import { useInputValue, useToggle } from '@/hooks/.'
 import IMessage from '@/models/chat/Imessage';
 
+import {GrCloudDownload} from 'react-icons/gr'
+
 const MessageIcons: React.FC<{message: IMessage, reactions: IReaction[] }> = ({message, reactions}) => {
   const [user] = useAuthState(auth)
 
@@ -32,8 +34,6 @@ const MessageIcons: React.FC<{message: IMessage, reactions: IReaction[] }> = ({m
     if (!confirm) {
       return
     }
-
-
     await deleteDoc(doc(firestore, "rooms", RoomStore.roomId, 'messages', message.id))
   }
 
@@ -44,7 +44,6 @@ const MessageIcons: React.FC<{message: IMessage, reactions: IReaction[] }> = ({m
     if (!newMessage) { alert('wrong new Message');return }
 
     await updateDoc(doc(firestore, "rooms", RoomStore.roomId, 'messages', message.id), { body: newMessage })
-
   }
 
   const dropItem:IDropItem[] = [

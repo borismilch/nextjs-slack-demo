@@ -14,8 +14,7 @@ import { collection } from 'firebase/firestore'
 import { observer } from 'mobx-react-lite'
 
 import { RoomStore } from '@/store/.'
-import { TextMessageContent, MessageHeader, ImageMessageContent } from './content';
-import { ImageMessage } from '@/models/chat/Imessage';
+import { TextMessageContent, MessageHeader, ImageMessageContent, VideoMessageContent , DocumentMessageContent} from './content';
 
 const Message: React.FC<{message: IMessage, showAnswears?: boolean, isAnswear?: boolean}> = 
   ({message, showAnswears = true, isAnswear = false}) => {
@@ -46,6 +45,13 @@ const Message: React.FC<{message: IMessage, showAnswears?: boolean, isAnswear?: 
 
           { message.role === 'text' ? 
            (<TextMessageContent message={message} />) : 
+          
+           message.role === 'video' ?
+           (<VideoMessageContent message={message as any} />) :
+           
+           message.role === 'document' ? 
+           ( <DocumentMessageContent message={message as any} /> ) :
+
            (<ImageMessageContent message={message as any} />)
           }
 
@@ -56,6 +62,8 @@ const Message: React.FC<{message: IMessage, showAnswears?: boolean, isAnswear?: 
         { showAnswears && <MessageAnswears messageId={message.id} /> }
 
       </div>
+
+      
 
      { !isAnswear && <div className='message_toolbar'>
 

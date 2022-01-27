@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import {observer} from 'mobx-react-lite'
 
 import { MediaStore } from '@/store/.'
-import { SendImage } from '.'
+import { SendImage, SendVideo, SendDocument } from '.'
 
 import AppIcon, { HiOutlinePlusSm } from '@/components/icons'
 
@@ -22,25 +22,32 @@ const ChatMediaForm = () => {
 
 
   return (
-    <div className='flex gap-3 justify-start w-full items-center'>
+    <div className={'flex gap-3 w-full items-center ' + (MediaStore.isVideo ? 'justify-center' : "justify-start")}>
 
       {
+        MediaStore.isVideo ?  <SendVideo file={MediaStore.files[0]} /> :
+        MediaStore.isDocuments ? 
+        
+        MediaStore.files.map(file => (
+          <SendDocument file={file} />
+        ))
+         :
         MediaStore.files.map((file, idx) => (
           <SendImage 
             file={file}
             idx={idx}
           />
-        ))
+        )) 
       }
 
       <input type="file" hidden ref={fileRef} onChange={changeFile} />
 
-      <AppIcon 
+     { !MediaStore.isVideo && <AppIcon 
         classes='p-2 text-2xl'
         Icon={<HiOutlinePlusSm className="text-2xl text-gray-700" />}
 
         onClick={triggerInput.bind(null)}
-      />
+      />}
 
     </div>
   )

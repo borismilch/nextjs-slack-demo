@@ -1,3 +1,4 @@
+import { IDocument } from "..";
 
 
 interface IMessage {
@@ -18,10 +19,10 @@ export interface ImageMessage extends IMessage {
   body: {url: string, id: number }[]
 }
 
-export interface IDocumentMessage extends IMessage {
-  
+export interface IVideoMessage extends IMessage {
+  body: { url: string, id: number }
 }
 
-export interface IVideoMessage extends IMessage {
-  
+export interface IDocumentMessage extends IMessage {
+  body: IDocument[]
 }

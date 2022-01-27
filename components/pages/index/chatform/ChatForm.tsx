@@ -36,15 +36,16 @@ const ChatForm: React.FC<{updateId?: string}> = ({updateId}) => {
 
   const sendMessage = async (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
-    if (!value && !MediaStore.images.length) { return }
+    if (!value && !MediaStore.images.length && !MediaStore.documents.length) { return }
     cleanValue()
 
     const message = {
       createdAt: serverTimestamp(),
-      body: MediaStore.images.length ? MediaStore.images.slice().map(item => ({id: item.id, url: item.url})) : value,
+      body: MediaStore.isDocuments ? MediaStore.documents : MediaStore.isVideo ? MediaStore.images[0] : MediaStore.images.length ?
+      MediaStore.images.slice().map(item => ({id: item.id, url: item.url})) : value,
       userImage: user?.photoURL,
       username: user?.displayName,
-      role: MediaStore.images.length ? 'image': 'text',
+      role: MediaStore.isDocuments ? 'document' :  MediaStore?.isVideo ? 'video' : MediaStore?.images?.length ? 'image': 'text',
       userId: user?.uid,
       adressat: adressat || ''
     }
@@ -64,6 +65,11 @@ const ChatForm: React.FC<{updateId?: string}> = ({updateId}) => {
 
     setAdressat('')
     MediaStore.cleanImages()
+    MediaStore.cleanDocuments()
+
+    MediaStore.isVideo = false 
+    MediaStore.isDocuments = false
+
   }
 
   const addAdressat = () => {
@@ -84,7 +90,7 @@ const ChatForm: React.FC<{updateId?: string}> = ({updateId}) => {
   return (
     <form onSubmit={sendMessage.bind(null)}>
 
-    <div className={'message_form mb-4 items-end '  + (updateId && 'bg-white ')}
+    <div className={'message_form mb-4 items-end w-full '  + (updateId && 'bg-white ')}
       style={{flexDirection: MediaStore.files.length ? 'row' : "column"}}
     >
     
@@ -114,7 +120,7 @@ const ChatForm: React.FC<{updateId?: string}> = ({updateId}) => {
         {MediaStore.files.length > 0 && <div></div> }
 
         <ButtonGroup 
-          disabled={(MediaStore.files.length ? (MediaStore.files.length > MediaStore.images.length) : !value)}
+          disabled={!MediaStore.isDocuments ? (MediaStore.files.length ? (MediaStore.files.length > MediaStore.images.length) : !value) : MediaStore.files.length > MediaStore.documents.length}
           onClickFirst={sendMessage.bind(null)}
           onClickSecond={() => {}}
         />

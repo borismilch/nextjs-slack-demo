@@ -1,10 +1,17 @@
 import { makeAutoObservable } from 'mobx'
 import { Ref } from 'react'
 
+import { IDocument } from '@/models/.'
+
 class SendingImagesStore {
 
   images: {url: string, id: number}[] = []
   files: File[] = [] as File[]
+
+  documents: IDocument[] = []
+
+  isVideo: boolean = false
+  isDocuments: boolean = false
 
   fileInputRef: Ref<HTMLInputElement> = null 
 
@@ -36,6 +43,23 @@ class SendingImagesStore {
 
   addFile (file: File) {
     this.files.push(file)
+  }
+
+  addVideo () {
+    this.isVideo = true
+  }
+
+  addDocument () {
+    console.log('docs')
+    this.isDocuments = true
+  }
+
+  pushDocumentData (doc: IDocument) {
+    this.documents.push(doc)
+  }
+
+  cleanDocuments () {
+    this.documents = []
   }
 
 } 
