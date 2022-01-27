@@ -79,4 +79,8 @@
     @apply flex flex-col bg-[#3F0E40] flex-[0.3] fixed md:relative h-full transition-all duration-300 z-50 transform translate-x-[-260px] max-w-[260px] md:translate-x-[0px]
   }
 
+  .mobile_overlay {
+    @apply  inset-0 bg-black bg-opacity-60 w-screen h-screen absolute transition-all duration-300 z-30 flex md:hidden
+  }
+
 }

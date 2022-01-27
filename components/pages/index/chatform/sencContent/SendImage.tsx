@@ -30,7 +30,7 @@ const SendImage: React.FC<{file: File, idx: number}> = ({file, idx}) => {
 
       {loading && <div className='inset-0 z-10 absolute bg-black bg-opacity-40 flex items-center h-full justify-center'>
 
-          <SmallLoader />
+          <SmallLoader size={6} />
        
       </div>}
 

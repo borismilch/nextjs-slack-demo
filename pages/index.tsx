@@ -11,9 +11,6 @@ import { auth } from '@/lib/firebase'
 
 import { Redirect } from '../auth'
 import { AnswearSidebar } from '@/components/pages/answear'
-import ReactDom from 'react-dom'
-
-import { Slider } from '@/components/Layout/slider'
 
 const Home:NextPage = () => {
 
