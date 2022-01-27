@@ -24,25 +24,25 @@ const Slider = () => {
   return (
     <div
       onClick={() => GalleryStore.clearData()}
-       className='flex z-[1000] fixed inset-0 items-center justify-center bg-black bg-opacity-60'>
+       className='flex z-[1000] fixed inset-0 items-center justify-center max-w-screen bg-black bg-opacity-60'>
 
-      <div className='flex items-center justify-center gap-4'> 
+      <div className='flex items-center justify-center md:gap-4'> 
 
         <button
           disabled={GalleryStore.selectedImage === 0}
           onClick={decrement.bind(null)}
-          className='round_button'>
+          className='round_button absolute left-4 md:relative z-20'>
           <FiChevronLeft />
         </button>  
         
         {  
           GalleryStore.images.slice().map((item, idx) => (
 
-            <div className='inline-block' key={item.url}>
+            <div className='inline-block  max-w-screen  ' key={item.url}>
                 <AnimatePresence>
                  {<img  
                     src={item.url}
-                    className={'absolute opacity-0 ' + (GalleryStore.selectedImage === idx && "relative opacity-100 visible")}
+                    className={'absolute opacity-0 md:w-auto w-[320px]  max-w-screen   ' + (GalleryStore.selectedImage === idx && "relative opacity-100 visible")}
                     style={{opacity: GalleryStore.selectedImage === idx ? 1 : 0}}
                   />}
                 </AnimatePresence>
@@ -54,7 +54,7 @@ const Slider = () => {
         <button 
           disabled={GalleryStore.selectedImage === GalleryStore.images.length - 1}
           onClick={increment.bind(null)}
-          className='round_button'>
+          className='round_button absolute right-4 z-20 md:relative'>
           <FiChevronRight />
         </button>
 
