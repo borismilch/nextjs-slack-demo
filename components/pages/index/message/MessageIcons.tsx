@@ -99,7 +99,7 @@ const MessageIcons: React.FC<{message: IMessage, reactions: IReaction[] }> = ({m
         
       />
 
-     {  open && <div className={'absolute z-20 transform -translate-x-56 transition-all duration-300 '}>
+     {  open && <div className={'absolute transform translate-x-14 translate-y-14 lg:translate-y-0 lg:-translate-x-56 transition-all duration-300 '}>
             <EmojiPicher 
               changeValue={changeValue}
             />

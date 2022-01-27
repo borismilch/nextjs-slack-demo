@@ -5,7 +5,7 @@ import { Emoji } from '..'
 
 const EmojiPicker: React.FC<{changeValue: (val: string) => void}> = ({changeValue}) => {
   return (
-    <div className="overflow-scroll scrollbar-none bg-white grid grid-cols-5 w-[200px] h-[245px] rounded-xl border-gray-400 border-2 drop-shadow-lg">
+    <div className="overflow-scroll scrollbar-none bg-white grid grid-cols-5 w-[200px] h-[53px] rounded-xl border-gray-400 border-2 drop-shadow-lg">
       
       {
         emojies.map(item => (

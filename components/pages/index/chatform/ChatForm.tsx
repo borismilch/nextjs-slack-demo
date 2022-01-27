@@ -90,7 +90,7 @@ const ChatForm: React.FC<{updateId?: string}> = ({updateId}) => {
   return (
     <form onSubmit={sendMessage.bind(null)}>
 
-    <div className={'message_form mb-4 items-end w-full '  + (updateId && 'bg-white ')}
+    <div className={'message_form mb-4 items-end '  + (updateId && 'bg-white ')}
       style={{flexDirection: MediaStore.files.length ? 'row' : "column"}}
     >
     
@@ -112,7 +112,7 @@ const ChatForm: React.FC<{updateId?: string}> = ({updateId}) => {
           />
           
           <div 
-            className={'absolute -top-[280px] left-0 transition-all duration-300 ' + (open ? 'opacity-100 visible' : 'opacity-0 hidden')}>
+            className={'absolute -top-[100px] z-10 left-0 transition-all duration-300 ' + (open ? 'opacity-100 visible' : 'opacity-0 hidden')}>
             <EmojiPicker changeValue={(val: string) => changeValue(value + val)} />
           </div>
         </>}

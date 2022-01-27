@@ -13,7 +13,7 @@
   }
 
   body {
-    @apply overflow-x-hidden font-sans
+    @apply overflow-hidden font-sans
   }
 
   .cleanInput {
@@ -29,7 +29,7 @@
   }
 
   .message_form {
-    @apply p-1 m-2 bg-transparent flex items-center pr-6 border-gray-400 border-2 rounded-xl bg-gray-50 transition-all duration-200
+    @apply p-1 mx-2 bg-transparent flex items-center pr-6 border-gray-400 border-2 rounded-xl bg-gray-50 transition-all duration-200 w-[95%]
   }
 
   .button_item {
