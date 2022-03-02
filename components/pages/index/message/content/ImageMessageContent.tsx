@@ -40,9 +40,9 @@ const ViewImage: React.FC<ViewImageProps> = ({message}) => {
 
            { 
             idx === 3 && message.body.length > 4 && 
-             <div className='
-              absolute bg-transparent inset-0 flex hover:opacity-60 items-center justify-center
-             '>
+             <div 
+               data-testid="pointer_test"
+               className='pointer_text'>
               <p className='text-white text-2xl font-medium'>+{message.body.length - 4}</p>
             </div>
            }
