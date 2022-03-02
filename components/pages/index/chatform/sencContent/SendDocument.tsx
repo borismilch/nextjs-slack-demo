@@ -1,19 +1,23 @@
 import React, { useEffect } from 'react';
-import { useUploadData } from '@/hooks/.'
+import { useUploadData } from 'hooks/.'
 
-import { RoomStore, MediaStore } from '@/store/.'
-import { observer } from 'mobx-react-lite';
-
-import { DocExts, DocTypes } from '@/utils/mock/DocTypes'
+import { DocExts, DocTypes } from 'utils/mocks/DocTypes'
 import { GrDocument } from 'react-icons/gr'
-import { SmallLoader } from '@/components/loaders'
+import { SmallLoader } from 'components/loaders'
+
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { roomIdSelector } from 'redux/selectors';
+import { MediaSliceActions } from 'redux/actions'
 
 const SendDocument: React.FC<{file: File}> = ({file}) => {
 
   const FileIcon = DocTypes[file.type] || GrDocument
   const extention = DocExts[file.type]
 
-  const {getUploadedData, url, loading} = useUploadData('images/' + RoomStore.roomId + "/", extention)
+  const roomId = useAppSelector(roomIdSelector)
+  const dispatch = useAppDispatch()
+
+  const {getUploadedData, url, loading} = useUploadData('images/' + roomId + "/", extention)
 
   useEffect(() => {
     getUploadedData(file)
@@ -28,7 +32,7 @@ const SendDocument: React.FC<{file: File}> = ({file}) => {
         url  
       }
   
-      MediaStore.pushDocumentData(doc)
+      dispatch(MediaSliceActions.addDocument(doc))
     }
   }, [url])
 
@@ -36,9 +40,10 @@ const SendDocument: React.FC<{file: File}> = ({file}) => {
 
     <div className='flex gap-2 items-center px-1 flex-shrink-0 relative rounded-md overflow-hidden pr-2'>
 
-      {loading && <div className='inset-0 absolute bg-opacity-50 bg-gray-400 flex justify-end items-start' />}
+      {loading && 
+      <div data-testid="overlay" className='inset-0 absolute bg-opacity-50 bg-gray-400 flex justify-end items-start' />}
 
-      <div className='p-2 border border-gray-400 rounded-full hover:bg-gray-100 transition-all duration-200 cursor-pointer'>
+      <div className='file_icon_wrapper'>
         <FileIcon className={'text-2xl'} />  
       </div>
 
@@ -46,7 +51,7 @@ const SendDocument: React.FC<{file: File}> = ({file}) => {
 
         <h2 className='text-lg font-medium'>{file.name}</h2>
 
-       { loading && <div className='ml-2'>
+       { loading && <div data-testid="loader" className='ml-2'>
           <SmallLoader size={6} color='text-blue-600' />
         </div>}
         
@@ -57,4 +62,4 @@ const SendDocument: React.FC<{file: File}> = ({file}) => {
   )
 };
 
-export default observer(SendDocument);
+export default SendDocument

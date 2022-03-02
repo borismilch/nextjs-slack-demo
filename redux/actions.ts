@@ -1,0 +1,6 @@
+export { AnswearSliceActions } from './slices/answear.slice'
+export { AuthSliceActions } from './slices/auth.slice'
+export { GallerySliceActions } from './slices/gallery.slice'
+export { MediaSliceActions } from './slices/media.slice'
+export { RoomSliceAction } from './slices/room.slice'
+export { SidebarSliceActions } from './slices/sidebar.slice'

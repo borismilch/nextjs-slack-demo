@@ -16,15 +16,11 @@ const ChatPlaceholder = () => {
         </div>
 
         <div className='flex flex-col items-center justify-center gap-2'>
-
          <h1 className='text-2xl text-black font-bold'>Welcome to slack</h1>
-
          <h4 className="text-sm font-semibold">start chatting...</h4>
-
         </div>
 
       </div>
-
     </div>
 
   )

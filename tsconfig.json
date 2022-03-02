@@ -20,18 +20,7 @@
     "incremental": true,
 
     "baseUrl": ".",
-    "paths": {
-      "@/components/*": ["components/*"],
-      "@/gql/*": ["graphql/*"],
-      "@/hooks/*": ["hooks/*"],
-      "@/models/*": ["models/*"],
-      "@/lib/*": ["lib/*"],
-      "@/prisma/*": ["prisma/*"],
-      "@/store/*": ["store/*"],
-      "@/utils/*": ["utils/*"],
-      "@/pages/*": ["pages/*"],
-      "@/auht/*": ["auth/*"],
-    },
+   
   },
 
   "include": [

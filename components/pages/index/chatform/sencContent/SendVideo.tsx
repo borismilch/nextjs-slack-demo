@@ -1,56 +1,53 @@
 import React from 'react';
 
-import { useUploadData } from '@/hooks/.'
-import { observer } from 'mobx-react-lite'
-import { RoomStore, MediaStore } from '@/store/.' 
+import { useUploadData } from 'hooks/.'
 import { useEffect } from 'react';
+import { SmallLoader } from 'components/loaders'
 
-import { SmallLoader } from '@/components/loaders'
-
-import { IoMdClose } from '@/components/icons'
-import { useRef } from 'react'
+import { useAppSelector, useAppDispatch } from 'hooks/redux';
+import { roomIdSelector } from 'redux/slices/room.selector';
+import { MediaSliceActions } from 'redux/actions';
 
 const SendVideo: React.FC<{file: File}> = ({file}) => {
 
-  const videoRef = useRef<HTMLInputElement>(null)
+  const roomId = useAppSelector(roomIdSelector)
+  const dispatch = useAppDispatch()
 
-  const {getUploadedData, dataUrl, url, loading} = useUploadData('images/' + RoomStore.roomId + "/")
+  const {getUploadedData, dataUrl, url, loading} = useUploadData('images/' + roomId + "/")
 
   useEffect(() => {
     getUploadedData(file)
   }, [])
 
   useEffect(() => {
-    if (url) {
-      MediaStore.addImage(url)
-    }
+      if (url) {
+        dispatch(MediaSliceActions.addImage(url))
+      }
   }, [url]) 
 
   return (
   
-    <div className='ml-auto w-[530px] h-[300px] mx-auto group relative rounded-lg drop-shadow overflow-hidden '>
-
-      {loading && <div className='inset-0 z-10 absolute bg-black bg-opacity-40 flex items-center h-full justify-center'>
-
-          <SmallLoader />
-       
+    <div className='
+      ml-auto w-[530px] h-[300px] mx-auto group relative rounded-lg drop-shadow overflow-hidden
+    '>
+      {loading && <div
+        data-testid="loader"
+        className='some_overlay'
+      >
+        <SmallLoader />
       </div>}
-
 
       <div className='z-0'>
       { dataUrl && 
-
         <video 
           controls
           src={dataUrl}
-          className='h-[300px]'
-         
+          className='h-[300px]' 
         />}
       </div>
-
       
     </div>
   )
 };
 
-export default observer(SendVideo);
+export default SendVideo

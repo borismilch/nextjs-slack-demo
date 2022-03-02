@@ -1,8 +1,8 @@
 import React, { ChangeEvent } from 'react'
 import { useState } from 'react'
-import { IuserInputValueArr } from '@/models/.'
+import { useInputValueArr } from 'models'
 
-const useInputValue = (initialVal: string = ''):IuserInputValueArr => {
+const useInputValue = (initialVal: string = ''): useInputValueArr => {
 
   const [value, setValue] = useState<string>(initialVal)
 
@@ -23,7 +23,6 @@ const useInputValue = (initialVal: string = ''):IuserInputValueArr => {
     onChange
   }
   
-
   return [value, bind, cleanValue, changeValue]
 }
 

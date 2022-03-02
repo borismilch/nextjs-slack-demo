@@ -1,6 +1,6 @@
 import { ChangeEvent, Ref } from "react";
 
-export default interface IuseUploadDataReult {
+export interface IuseUploadDataReult {
   dataUrl: string,
   url: string,
   getUploadedData: (file: File) => void 

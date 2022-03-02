@@ -19,11 +19,11 @@ const useFormValues: (fields: string[]) => any = (fields) => {
     setForm(initialValue)
   }
 
-  return [
+  return {
     form, 
     changeForm,
     cleanForm
-  ]
+  }
 };
 
 export default useFormValues;

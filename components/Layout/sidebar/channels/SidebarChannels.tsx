@@ -1,22 +1,29 @@
 import React from 'react';
-import { ISidebarItem } from '@/models/.';
+import { ISidebarItem } from 'models';
 
-import { useToggle } from '@/hooks/.'
-import {MdOutlineArrowDropDown, HiHashtag} from '@/components/icons'
+import { useToggle } from 'hooks'
+import {MdOutlineArrowDropDown, HiHashtag} from 'components/icons'
 import { SidebarItem } from '..'
-
-import { RoomStore } from '@/store/.'
-import { observer } from 'mobx-react-lite'
-
 import { AnimatePresence, motion } from 'framer-motion'
 
-const SidebarChannels: React.FC<{channels: ISidebarItem[]}> = ({channels}) => {
+import { useAppDispatch } from 'hooks/redux'
+import { RoomSliceAction } from 'redux/actions'
+
+interface SidebarChannelsProps {
+  channels: ISidebarItem[]
+}
+
+const SidebarChannels: React.FC<SidebarChannelsProps> = ({channels}) => {
 
   const [open, changeOpen] = useToggle(false)
+  const dispatch = useAppDispatch()
+
+  const selectCurrentRoom = (id: string) => {
+    dispatch(RoomSliceAction.setCurrentRoom(id))
+  }
 
   const channelSidebatItem: ISidebarItem = {
     text: "Channels",
-   
     onClick: changeOpen.bind(null, !open)
   }
 
@@ -25,9 +32,10 @@ const SidebarChannels: React.FC<{channels: ISidebarItem[]}> = ({channels}) => {
 
       <SidebarItem
         sidebarItem={channelSidebatItem} 
-        Icon={<MdOutlineArrowDropDown className={
-          'text-white text-opacity-50 text-2xl font-medium transform transition-all duration-200 ' 
-          + (open && 'rotate-180')} />}
+        Icon={<MdOutlineArrowDropDown 
+          className={'sidebar_something ' 
+          + (open && 'rotate-180')} 
+        />}
       />
 
       <AnimatePresence>
@@ -40,11 +48,18 @@ const SidebarChannels: React.FC<{channels: ISidebarItem[]}> = ({channels}) => {
 
         <div className="flex flex-col px-4">
           {channels?.map(item => (
+            
             <SidebarItem 
               key={item.id}
-              sidebarItem={{text: item.text, onClick: () => RoomStore.setCurrentRoom(item.id) }}
+              sidebarItem={
+                {
+                  text: item.text, 
+                  onClick: selectCurrentRoom.bind(null, item.id)
+                }
+              }
               Icon={<HiHashtag className='text-white text-opacity-50 ' />}
             />
+         
           ))}
         </div>
 
@@ -56,4 +71,4 @@ const SidebarChannels: React.FC<{channels: ISidebarItem[]}> = ({channels}) => {
   )
 };
 
-export default observer(SidebarChannels);
+export default SidebarChannels

@@ -1,4 +1,4 @@
-export default interface ISidebarItem {
+export interface ISidebarItem {
   text: string 
   onClick?: () => void
   id?: string

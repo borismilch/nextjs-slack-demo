@@ -1,8 +1,14 @@
 import React from 'react';
 
-const Emoji: React.FC<{val: string, onClick: () => void}> = ({val, onClick}) => {
+interface EmojiProps {
+ val: string, 
+ onClick: () => void
+}
+
+const Emoji: React.FC<EmojiProps> = (props) => {
+  const { onClick, val } = props
   return (
-    <div onClick={onClick.bind(null)}>
+    <div data-testid="emoji" onClick={onClick.bind(null)}>
       <p className='emoji'>
         {val}
       </p>

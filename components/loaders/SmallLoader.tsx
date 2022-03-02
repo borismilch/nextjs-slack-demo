@@ -1,6 +1,14 @@
 import React from 'react';
 
-const SmallLoader: React.FC<{color?: string, size?:number}> = ({color = 'text-white', size = 6 }) => {
+interface SmallLoaderProps {
+  color?: string, 
+  size?:number
+}
+
+const SmallLoader: React.FC<SmallLoaderProps> = (props) => {
+  
+  const {color = 'text-white', size = 6 } = props
+
   return (
     <svg className={`animate-spin inline h-6 w-6 ` + color + ' ' + `h-${size} w-${size}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth={4}></circle>

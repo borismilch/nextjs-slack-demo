@@ -1,74 +1,58 @@
 import React, { useEffect } from 'react';
-import AppIcon, {BsFillChatRightTextFill, MdOutlineAddReaction, BsThreeDotsVertical} from '@/components/icons'
-
-import { collection, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore'
-import { firestore, auth } from '@/lib/firebase'
-
-import { observer } from 'mobx-react-lite'
-
+import { auth } from 'lib/firebase'
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { IDropItem, IReaction } from '@/models/.';
+import { IDropItem, IMessage, IReaction } from 'models/.';
 
-import { RoomStore, AnswearStore } from '@/store/.' 
 import dynamic from 'next/dynamic'
+import { useInputValue } from 'hooks/.'
+import { ReactionService } from 'services';
 
-import {DropList} from '@/components/forms'
+import { useAppSelector, useAppDispatch } from 'hooks/redux';
+import { roomIdSelector } from 'redux/slices/room.selector'; 
+import { AnswearSliceActions } from 'redux/actions';
+import  DumbMessageIcons  from './dumb/DumbMessageIcons'
 
-import { useInputValue, useToggle } from '@/hooks/.'
-import IMessage from '@/models/chat/Imessage';
+interface MessageIconsProps {
+  message: IMessage,
+  reactions: IReaction[] 
+}
 
-import {GrCloudDownload} from 'react-icons/gr'
+const MessageIcons: React.FC<MessageIconsProps> = (props) => {
+  const {message, reactions} = props
 
-const MessageIcons: React.FC<{message: IMessage, reactions: IReaction[] }> = ({message, reactions}) => {
+  const roomId = useAppSelector(roomIdSelector)
   const [user] = useAuthState(auth)
+  const dispatch = useAppDispatch()
 
   const [value, bind, clean, changeValue] = useInputValue()
-  const [open, changeOpen] = useToggle(false)
-  const [openMune, setOpenMenu] = useToggle(false)
 
-  const EmojiPicher = dynamic(() => import('@/components/forms/emojiPicker/EmojiPicjker'))
+  const commentMessage = () => {
+    dispatch(AnswearSliceActions.commentMessage(message.id))
+  }
 
   const deleteItem = async () => {
-    const confirm = prompt('Are you sure?')
-
-    if (!confirm) {
-      return
-    }
-    await deleteDoc(doc(firestore, "rooms", RoomStore.roomId, 'messages', message.id))
+    await ReactionService.deleteItem(roomId, message.id)
   }
 
   const updateItem = async () => {
-
-    const newMessage = prompt('Enter new mesage here')
-
-    if (!newMessage) { alert('wrong new Message');return }
-
-    await updateDoc(doc(firestore, "rooms", RoomStore.roomId, 'messages', message.id), { body: newMessage })
+    await ReactionService.updateItem(roomId, message.id)
   }
-
-  const dropItem:IDropItem[] = [
-    {text: 'Delete', id: '12', onClick: deleteItem.bind(null) },
-    {text: 'Change', id: '1ll2', onClick: updateItem.bind(null) }
-  ]
-
 
   const addReaction = async (react: string) => {
     const reaction = {
       body: react,
-      userId: user.uid,
+      userId: user?.uid || 'ss',
     }
-
-    const exsistReaction = reactions.find(item => item.body === react && item.userId === user.uid)
-
-    if (exsistReaction) {
-      await deleteDoc(doc(firestore, 'rooms', RoomStore.roomId, 'messages', message.id, 'reactions', exsistReaction.id))
-    }
-
-    else {
-      await addDoc(collection(firestore, 'rooms', RoomStore.roomId, 'messages', message.id, 'reactions'), reaction)
-    }
-
+    const existReaction: IReaction = reactions.find(item => item.body === react && item.userId === user?.uid)
+    await ReactionService.addReaction(roomId, message.id, reaction, existReaction)
   }
+
+  const reactionItems = ["✨", "✔"]
+
+  const dropItems:IDropItem[] = [
+    {text: 'Delete', id: '12', onClick: deleteItem.bind(null) },
+    {text: 'Change', id: '1ll2', onClick: updateItem.bind(null) }
+  ]
 
   useEffect(() => {
     if (value) {
@@ -77,64 +61,17 @@ const MessageIcons: React.FC<{message: IMessage, reactions: IReaction[] }> = ({m
   }, [value])
 
   return (
-    <div className="flex bg-white  relative drop-shadow-md rounded-full items-center p-1">
-
-      <AppIcon 
-        Icon={ <p className="text-lg">✨</p> }
-        classes='p-1'
-        onClick={() => addReaction('✨')}
+    <>
+      <DumbMessageIcons 
+        addReaction={addReaction}  
+        changeValue={changeValue}
+        commentMessage={commentMessage}
+        dropItems={dropItems}
+        message={message}
+        reactionItems={reactionItems}
       />
-
-      <AppIcon 
-        Icon={ <p className="text-lg">✔</p> }
-        classes='p-1'
-        onClick={() => addReaction('✔')}
-      />
-
-      <AppIcon 
-        Icon={<MdOutlineAddReaction className='text-lg text-gray-500'  />}
-        text='reactions'
-        classes='text-xs p-1'
-        onClick={changeOpen.bind(null, !open)}
-        
-      />
-
-     {  open && <div className={'absolute transform translate-x-14 translate-y-14 lg:translate-y-0 lg:-translate-x-56 transition-all duration-300 '}>
-            <EmojiPicher 
-              changeValue={changeValue}
-            />
-        </div>}
-
-      <div onClick={() => AnswearStore.commentMessage(message.id)}>
-        <AppIcon 
-          Icon={<BsFillChatRightTextFill className='text-sm text-gray-500'  />}
-          text='answear'
-          classes='text-xs p-1'
-          
-        />
-      </div>
-
-      { user.uid === message.userId && <>
-       <div className='relative'>  
-
-        <AppIcon 
-          Icon={<BsThreeDotsVertical className='text-xl text-gray-500'  />}
-          classes='text-xs p-1'
-          onClick={setOpenMenu.bind(null, prev => !prev)}
-        />
-
-        </div>
-
-        {openMune && <div onMouseLeave={setOpenMenu.bind(null, false)} className="absotute">
-          <DropList
-            onClose={setOpenMenu.bind(null, false)} 
-            dropItems={dropItem}
-          />
-        </div>}
-      </>}
-
-    </div>
+    </>
   )
 };
 
-export default observer(MessageIcons);
+export default MessageIcons

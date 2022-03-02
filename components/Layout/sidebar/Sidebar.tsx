@@ -1,22 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { SidebarHeader, SidebarItems, SidebarChannels, SidebarItem } from '.'
 
 import {addDoc, collection} from 'firebase/firestore'
-import { firestore } from '@/lib/firebase';
-
+import { firestore } from 'lib/firebase';
 import {HiPlusSm} from 'react-icons/hi'
-
-import { observer } from 'mobx-react-lite'
-
 import { useCollection } from 'react-firebase-hooks/firestore'
-import { ISidebarItem } from '@/models/.';
+import { IRoom, ISidebarItem, TextMessage } from 'models/.';
 import { useState } from 'react'
-import {SidebarStore} from '@/store/.';
+
+import { useAppSelector, useAppDispatch } from 'hooks/redux';
+import { sidebarOpenSelector } from 'redux/selectors'
+import { SidebarSliceActions } from 'redux/actions';
+import { MessageService } from 'services';
+import { userSelector } from 'redux/selectors';
 
 const Sidebar = () => {
 
-  const [channels, laoding, error] = useCollection(collection(firestore, 'rooms'))
+  const [channels] = useCollection(collection(firestore, 'rooms'))
   const [myChannels, setMyChannels] = useState<ISidebarItem[]>([])
+
+  const sidebarOpen = useAppSelector(sidebarOpenSelector)
+  const dispatch = useAppDispatch()
+  const user = useAppSelector(userSelector)
 
   const AddChannel = async () => {
     const channelName = prompt('Please, enter channel name')
@@ -25,48 +30,49 @@ const Sidebar = () => {
       
     const docRef = collection(firestore, 'rooms')
     await addDoc(docRef, { name: channelName })
-    
   }
 
   const closeSidebar = () => {
-    SidebarStore.changeOpen(false)
+    dispatch(SidebarSliceActions.changeOpen(false))
   }
 
+  const sendMessageForChosen = useCallback(
+    async (rooms: IRoom[]) => await MessageService.sendMessageDirectly(rooms, user)
+  ,[])
+
   useEffect(() => {
-    setMyChannels(channels?.docs?.map(doc =>( {text: doc.data().name, id: doc.id} )))
+    setMyChannels(channels?.docs?.
+      map(doc =>( {text: doc.data().name, id: doc.id} ))
+    )
   }, [channels])
 
   return (
     <>
-    <div className={'sidebar ' + (SidebarStore.open && 'transform translate-x-0')}>
+    <div className={'sidebar ' + (sidebarOpen && 'transform translate-x-0')}>
 
-      <SidebarHeader />
+    <SidebarHeader sendMessage = {sendMessageForChosen} />
 
       <SidebarItems  />
 
       <SidebarChannels channels={myChannels} />
         
-
       <SidebarItem 
         sidebarItem={{
           text: 'Add Channel',
           onClick: AddChannel
         }} 
         Icon = {<HiPlusSm className="text-xl text-white" /> }
-
       />
 
     </div>
 
-   { SidebarStore.open && <div 
-      onClick={closeSidebar}
-      className='
-        inset-0 bg-black bg-opacity-60 w-screen h-screen absolute transition-all duration-300 z-30 flex md:hidden
-    '/>
-   }
+    { sidebarOpen && <div 
+      onClick={closeSidebar.bind(null)}
+      className='overlay_lay'/>
+    }
 
     </>
   )
 };
 
-export default observer(Sidebar);
+export default Sidebar

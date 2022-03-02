@@ -2,6 +2,8 @@ import Head from 'next/head'
 import '../styles/index.css'
 
 import { motion } from 'framer-motion'  
+import { Provider } from 'react-redux'
+import { store } from 'redux/store'
 
 export default function MyApp({ Component, pageProps, router }) {
   return (
@@ -35,7 +37,8 @@ export default function MyApp({ Component, pageProps, router }) {
           <meta name="theme-color" content="#317EFB" />
         </>
       </Head>
-
+     
+     <Provider store={store}>
       <motion.div
         key={router.route}
         initial="pageInitial" 
@@ -51,7 +54,9 @@ export default function MyApp({ Component, pageProps, router }) {
       >
         <Component {...pageProps} />   
       </motion.div>
+     </Provider> 
 
     </>
+
   )
 }

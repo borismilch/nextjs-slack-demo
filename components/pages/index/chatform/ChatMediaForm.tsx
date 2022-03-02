@@ -1,38 +1,38 @@
 import React, { useRef } from 'react';
 import {observer} from 'mobx-react-lite'
-
-import { MediaStore } from '@/store/.'
 import { SendImage, SendVideo, SendDocument } from '.'
 
-import AppIcon, { HiOutlinePlusSm } from '@/components/icons'
+import AppIcon, { HiOutlinePlusSm } from 'components/icons'
+import { useAppSelector, useAppDispatch } from 'hooks/redux';
+import { MediaSliceActions } from 'redux/actions';
+import { mediaSelector } from 'redux/selectors'
 
 const ChatMediaForm = () => {
-
   const fileRef = useRef<HTMLInputElement>(null)
+  const dispatch = useAppDispatch()
+  const { isVideo, isDocuments, files } = useAppSelector(mediaSelector)
 
   const changeFile = () => {
     const file = fileRef?.current?.files[0]
-
-    if (file) MediaStore.addFile(file)
+    if (file) dispatch(MediaSliceActions.addFile(file))
   }
 
   const triggerInput = () => {
     fileRef?.current?.click()
   }
 
-
   return (
-    <div className={'flex gap-3 w-full items-center ' + (MediaStore.isVideo ? 'justify-center' : "justify-start")}>
-
+    <div className={'flex gap-3 w-full items-center ' + 
+      (isVideo ? 'justify-center' : "justify-start")
+    }>
       {
-        MediaStore.isVideo ?  <SendVideo file={MediaStore.files[0]} /> :
-        MediaStore.isDocuments ? 
-
-        MediaStore.files.map((file, idx) => (
+        isVideo ?  <SendVideo file={files[0]} /> :
+        isDocuments ? 
+        files.map((file, idx) => (
           <SendDocument key={file.name + idx } file={file} />
         ))
          :
-        MediaStore.files.map((file, idx) => (
+        files.map((file, idx) => (
           <SendImage 
             key={file.name + idx }
             file={file}
@@ -43,7 +43,7 @@ const ChatMediaForm = () => {
 
       <input type="file" hidden ref={fileRef} onChange={changeFile} />
 
-     { !MediaStore.isVideo && <AppIcon 
+     { !isVideo && <AppIcon 
         classes='p-2 text-2xl'
         Icon={<HiOutlinePlusSm className="text-2xl text-gray-700" />}
 

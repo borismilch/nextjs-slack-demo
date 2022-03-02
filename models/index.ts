@@ -1,24 +1,18 @@
-import User from './types'
-import useUploadDataReult from "./hooks/IuseUploadDataReult";
-import uerInputValueArr from './hooks/IsuerInputValueArr'
-import UserInput from "./userInterfaces/IUserInput";
-import SidebarItem from './utils/ISidebarItem'
-import ChannelItem from './utils/ISidebarItem'
-import Message from './chat/Imessage'
-import Room  from './chat/IChat'
-import Reaction from './chat/Ireaction'
-import Doc from './chat/IDocument'
+export type {IUser} from './types'
+export type {IuseUploadDataReult} from "./hooks/IuseUploadDataReult";
+export type {useInputValueArr} from './hooks/IsuerInputValueArr'
+export type {IUserInput} from "./userInterfaces/IUserInput";
+export type {ISidebarItem} from './utils/ISidebarItem'
+export type {
+  ImageMessage, IDocumentMessage, IVideoMessage, TextMessage, IMessage
+} from './chat/Imessage'
+export type {IChat}  from './chat/IChat'
+export type {IReaction} from './chat/Ireaction'
+export type {IDoc as IDocument} from './chat/IDocument'
+export type { IMage } from './chat/IMage'
 
-export interface IuseUploadDataReult extends useUploadDataReult {}
-export interface IuserInputValueArr extends uerInputValueArr {}
-export interface IUserInput extends UserInput {}
-export interface ISidebarItem extends SidebarItem {}
-export interface IChannelItem extends ChannelItem {}
-export interface IMessage extends Message {}
-export interface IUser extends User {}
-export interface IRoom extends Room {} 
-export interface IReaction extends Reaction {}
-export interface IDropItem extends SidebarItem {}
-export interface IAnswear extends IMessage {}
-export interface IDocument extends Doc {}
+export type { IChat as IRoom } from './chat/IChat'
+import { ISidebarItem } from '.';
 
+export type IDropItem = ISidebarItem
+export type { ILink } from './utils/ILink'

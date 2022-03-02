@@ -1,4 +1,4 @@
-export default interface IUserInput {
+export interface IUserInput {
   email: string 
   name: string 
   picture: string 

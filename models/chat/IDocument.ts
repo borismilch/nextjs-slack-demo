@@ -1,4 +1,4 @@
-export default interface IDoc {
+export interface IDoc {
   name: string 
   size: number 
   url: string 

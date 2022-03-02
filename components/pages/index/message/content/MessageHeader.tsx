@@ -1,10 +1,13 @@
-import { dayts } from '@/lib/dayts';
+import { dayts } from 'lib/dayts';
 import React from 'react';
-import { IMessage } from '@/models/.'
-
+import { IMessage } from 'models/.'
 import Image from 'next/image'
 
-const MessageHeader: React.FC<{message: IMessage}> = ({message}) => {
+interface MessageHeaderProps {
+  message: IMessage
+}
+
+const MessageHeader: React.FC<MessageHeaderProps> = ({message}) => {
   return (
     <div className='flex md:py-2 gap-1 pb-2'>
 

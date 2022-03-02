@@ -1,6 +1,0 @@
-export { default as AuthStore } from './AuthStore'
-export { default as RoomStore } from './RoomStore'
-export { default as MediaStore } from './MediaStore'
-export { default as AnswearStore } from './AnswearStore'
-export { default as GalleryStore } from './GalleryStore'
-export { default as SidebarStore } from './SidebarStore'

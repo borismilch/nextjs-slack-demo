@@ -1,19 +1,19 @@
 import Layout from '../components/Layout';
 
 import { NextPage } from 'next';
-import { observer } from 'mobx-react-lite';
-import { RoomStore, AnswearStore, GalleryStore } from '@/store/.'
-
-import { Chat, ChatPlaceholder } from '@/components/pages/index'
+import { Chat, ChatPlaceholder } from 'components/pages/index'
 import { useAuthState } from 'react-firebase-hooks/auth'
-
-import { auth } from '@/lib/firebase'
-
+import { auth } from 'lib/firebase'
 import { Redirect } from '../auth'
-import { AnswearSidebar } from '@/components/pages/answear'
+import { AnswearSidebar } from 'components/pages/answear'
+
+import { useAppSelector } from 'hooks/redux';
+import { roomIdSelector, isCommentingSelector } from 'redux/selectors';
 
 const Home:NextPage = () => {
 
+  const roomId = useAppSelector(roomIdSelector)
+  const isCommenting = useAppSelector(isCommentingSelector)
   const [user, loading] = useAuthState(auth)
 
   if (!user && !loading) {
@@ -23,15 +23,15 @@ const Home:NextPage = () => {
   return (
     <Layout title='Some App'>
 
-      {RoomStore.roomId && <Chat />}
+      {roomId && <Chat />}
 
-      {!RoomStore.roomId && <ChatPlaceholder />}
+      {!roomId && <ChatPlaceholder />}
 
-      {AnswearStore.isCommenting && <AnswearSidebar />}
+      {isCommenting && <AnswearSidebar />}
      
     </Layout>
   );
 }
 
-export default observer(Home)
+export default Home
 

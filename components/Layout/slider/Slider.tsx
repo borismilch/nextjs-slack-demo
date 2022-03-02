@@ -1,62 +1,59 @@
-import React, { SyntheticEvent, useEffect } from 'react';
-import { observer } from 'mobx-react-lite'
+import React, { SyntheticEvent } from 'react';
 
-import { GalleryStore } from '@/store/.'
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
-import {AnimatePresence, motion} from 'framer-motion'
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { imagesSelector, selectedImageIndexSelector } from 'redux/selectors'
+import { GallerySliceActions } from 'redux/actions'; 
+
+import { SliderButton, SliderSlide } from '.';
 
 const Slider = () => {
+  const dispatch = useAppDispatch()
+
+  const selectedImageIndex = useAppSelector(selectedImageIndexSelector)
+  const galleryImages = useAppSelector(imagesSelector)
 
   const increment = (e: SyntheticEvent<HTMLButtonElement>) => {
     e.stopPropagation()
-    GalleryStore.incrementImage()
+    dispatch(GallerySliceActions.incrementImage())
   }
 
   const decrement = (e: SyntheticEvent<HTMLButtonElement>) => {
     e.stopPropagation()
-    GalleryStore.decrementImage()
+    dispatch(GallerySliceActions.decrementImage())
   }
 
-  useEffect(() => {
-    console.log('changed')
-  }, [GalleryStore.selectedImage, GalleryStore.images])
+  const clearData = () => {
+    dispatch(GallerySliceActions.clearData())
+  }
 
   return (
     <div
-      onClick={() => GalleryStore.clearData()}
-       className='flex z-[1000] fixed inset-0 items-center justify-center max-w-screen bg-black bg-opacity-60'>
+      data-testid="slider"
+      onClick={clearData.bind(null)}
+       className='gallery_wrapper'>
 
       <div className='flex items-center justify-center md:gap-4'> 
 
-        <button
-          disabled={GalleryStore.selectedImage === 0}
+        <SliderButton 
+          isDisabled={selectedImageIndex === 0}
           onClick={decrement.bind(null)}
-          className='round_button absolute left-4 md:relative z-20'>
+        >
           <FiChevronLeft />
-        </button>  
-        
+        </SliderButton>
         {  
-          GalleryStore.images.slice().map((item, idx) => (
-
-            <div className='inline-block  max-w-screen  ' key={item.url}>
-                <AnimatePresence>
-                 {<img  
-                    src={item.url}
-                    className={'absolute opacity-0 md:w-auto w-[320px]  max-w-screen   ' + (GalleryStore.selectedImage === idx && "relative opacity-100 visible")}
-                    style={{opacity: GalleryStore.selectedImage === idx ? 1 : 0}}
-                  />}
-                </AnimatePresence>
-            </div>
-
+          galleryImages.slice().map((item, idx) => (
+            <SliderSlide idx={idx} item={item} />
+   
           ))
         }
-
-        <button 
-          disabled={GalleryStore.selectedImage === GalleryStore.images.length - 1}
+       
+        <SliderButton 
+          isDisabled={selectedImageIndex === galleryImages.length - 1}
           onClick={increment.bind(null)}
-          className='round_button absolute right-4 z-20 md:relative'>
+        >
           <FiChevronRight />
-        </button>
+        </SliderButton>
 
       </div>
 
@@ -64,5 +61,5 @@ const Slider = () => {
   )
 };
 
-export default observer(Slider)
+export default Slider
 

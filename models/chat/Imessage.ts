@@ -1,7 +1,5 @@
 import { IDocument } from "..";
-
-
-interface IMessage {
+export interface IMessage {
   createdAt: {seconds: number, nanoseconds: number}
   userImage: string 
   username: string 
@@ -11,7 +9,7 @@ interface IMessage {
   adressat?: string
 }
 
-export default interface TextMessage extends IMessage {
+export interface TextMessage extends IMessage {
   body: string
 }
 

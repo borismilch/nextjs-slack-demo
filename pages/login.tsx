@@ -1,33 +1,18 @@
 import React, { SyntheticEvent } from 'react';
 import Image from 'next/image'
 
-import { auth, googleProvider, firestore } from '@/lib/firebase'
+import { auth, googleProvider } from 'lib/firebase'
 import { signInWithPopup } from 'firebase/auth'
-
-import { useNavigation } from '@/hooks/.'
-
-import { doc, getDoc, setDoc } from 'firebase/firestore'
+import { useNavigation } from 'hooks/.'
+import { UserService } from 'services';
+import { IUser } from '../models';
 
 const Login = () => {
 
   const {pushRouter} = useNavigation()
 
-  const checkUser = async (userId: string, payload) => {
-    console.log(payload)
-    let user
-         
-    try {
-      user = await getDoc(doc(firestore, 'users', userId))
-      console.log(user.data())
-    } catch {}
-
-    if (user.data()) { return }
-
-    const {displayName, email, photoURL, uid} = payload
-
-    await setDoc(doc(firestore, 'users', uid), {displayName, email, photoURL, uid})
-
-    console.log('bone')
+  const checkUser = async (userId: string, userData: IUser) => {
+    await UserService.checkUser(userId, userData)
   }
 
   const signIn = (e: SyntheticEvent<HTMLButtonElement>) => {
@@ -54,7 +39,6 @@ const Login = () => {
         <div className='flex flex-col items-center justify-center gap-2'>
 
          <h1 className='text-2xl text-black font-bold'>Sign in to Slack</h1>
-
          <h4 className="text-sm font-semibold">srack.com</h4>
 
           <button
@@ -62,12 +46,8 @@ const Login = () => {
             onClick={signIn} 
           >
             Sign in with Google</button>
-
         </div>
-
       </div>
-
-      
     </div>
   )
 };

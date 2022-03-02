@@ -1,3 +1,4 @@
-export default interface IChat {
-  name: string 
+export interface IChat {
+  name: string ,
+id?: string
 }

@@ -1,27 +1,34 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite'
 
-import { AnswearStore, RoomStore } from '@/store/.'
-import { firestore } from '@/lib/firebase'
+import { firestore } from 'lib/firebase'
 import { useDocument } from 'react-firebase-hooks/firestore'
 import { doc } from 'firebase/firestore'
+import { AnswearHeader, AnswearBodyWrapper } from '.'
 
-import { AnswearHeader, AnswearBody } from '.'
-import IMessage from '@/models/chat/Imessage';
+import { useAppSelector } from 'hooks/redux';
+import { roomIdSelector, isCommentingSelector, messageIdSelector } from 'redux/selectors';
+import { IMessage } from 'models';
+import AnswearHeaderWrapper from './AnswearHeaderWrapper';
 
 const AnswearSidebar = () => {
 
-  const [message] = useDocument(doc(firestore, 'rooms', RoomStore.roomId, 'messages', AnswearStore.messageId))
+  const roomId = useAppSelector(roomIdSelector)
+  const messageId = useAppSelector(messageIdSelector)
+  const isCommenting = useAppSelector(isCommentingSelector)
+
+  const [message] = useDocument(doc(firestore, 'rooms', roomId, 'messages', messageId))
 
   return (
     <>
-    { AnswearStore.isCommenting && <div className='mobile_overlay' />}
-    <div className={'flex flex-col h-full z-50 right-0 bg-white lg:relative transition-all duration-300 absolute flex-shrink-0  w-[380px] border-l border-gray-300 ' 
-    }>
+    { isCommenting && <div className='mobile_overlay' />}
+    <div className={'answear_sidebar_wrapper ' }>
+      <AnswearHeaderWrapper />
 
-      <AnswearHeader />
-
-      { message && <AnswearBody message={{...message.data(), id: message.id} as IMessage} /> }
+      { message && 
+        <AnswearBodyWrapper 
+        message={{...message.data(), id: message.id} as IMessage}  /> 
+      }
 
     </div>
     </>

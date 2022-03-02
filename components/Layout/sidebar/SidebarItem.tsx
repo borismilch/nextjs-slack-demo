@@ -1,21 +1,29 @@
 import React, { ReactElement } from 'react';
 
-import { ISidebarItem } from '@/models/.';
+import { ISidebarItem } from 'models';
 
-const SidebarItem:React.FC<{sidebarItem: ISidebarItem, Icon: ReactElement<any, any>}> = ({sidebarItem: { text, onClick }, Icon}) => {
+interface SidebarItemProps {
+  sidebarItem: ISidebarItem, 
+  Icon: ReactElement<any, any>
+}
+
+const SidebarItem:React.FC<SidebarItemProps> = (props) => {
+
+  const {sidebarItem: { text, onClick }, Icon} = props
+  
   return (
     <div 
+      data-testid="sidebar-item"
       onClick={onClick ? onClick.bind(null) : null}
-      className='flex items-center  gap-2 w-full p-2 px-3 hover:bg-darken cursor-pointer transition-all duration-200'>
+      className='sidebar_item_wrapper'>
 
-    <div className='opacity-60'>
-      {Icon}
-    </div>
+      <div className='opacity-60'>
+        {Icon}
+      </div>
      
-
-     <p className="font-medium leading-3 text-white text-opacity-50">
-       {text}
-     </p>
+      <p className="font-medium leading-3 text-white text-opacity-50">
+        {text}
+      </p>
 
     </div>
   )

@@ -1,15 +1,12 @@
 import React from 'react';
-
-import { ISidebarItem } from '@/models/.'
 import { SidebarItem } from '.'
-
-import { SiBlazor, BsChatDots, BiDotsVerticalRounded } from '@/components/icons'
+import { SiBlazor, BsChatDots, BiDotsVerticalRounded } from 'components/icons'
 
 const SidebarItems: React.FC = () => {  
 
   const sidebarItems = [
     {
-      text: 'Chattong',
+      text: 'Chatting',
       Icon: <BsChatDots className="text-white" />
     },
 
@@ -29,7 +26,11 @@ const SidebarItems: React.FC = () => {
 
     {
       sidebarItems.map(item => (
-        <SidebarItem key={item.text} sidebarItem={{text: item.text}} Icon={item.Icon} />
+        <SidebarItem 
+          key={item.text} 
+          sidebarItem={{text: item.text}} 
+          Icon={item.Icon} 
+        />
       ))
     }
 

@@ -52,6 +52,13 @@
     @apply -bottom-12 
   }
 
+  .header_wrapper {
+    @apply flex relative w-full z-50 gap-2 items-center justify-center px-4 p-1 bg-darken
+  }
+
+  .button_group {
+    @apply  flex items-center transition-all overflow-hidden duration-200 disabled:bg-gray-200 hover:bg-green-600 rounded-md 
+  }
   .small_avatar {
     @apply w-[27px] h-[27px] rounded-md overflow-hidden drop-shadow transition-all duration-200 hover:opacity-80 relative
   }
@@ -83,4 +90,86 @@
     @apply  inset-0 bg-black bg-opacity-60 w-screen h-screen absolute transition-all duration-300 z-30 flex md:hidden
   }
 
+  .white_overlay {
+    @apply flex items-center w-[130px] bg-white rounded-2xl drop-shadow-lg overflow-hidden transition-all duration-300
+  }
+
+  .app_icon {
+  @apply p-2 rounded-full active:scale-90  inline-block relative cursor-pointer hover:bg-gray-200 transition-all duration-200 text-gray-600
+  }
+
+  .overlay_lay {
+    @apply  inset-0 bg-black bg-opacity-60 w-screen h-screen absolute transition-all duration-300 z-30 flex md:hidden
+  }
+
+.edit_wrapper {
+    @apply rounded-full cursor-pointer active:scale-90 transition-all duration-200 hover:bg-gray-100 drop-shadow-sm flex-shrink-0 bg-white avatar flex items-center justify-center
+  }
+
+  .sidebarHeaderWrapper {
+    @apply flex items-center gap-2 pt-2 p-3 border-white border-opacity-20 border-t border-b
+  }
+
+  .sidebar_item_wrapper {
+    @apply flex items-center  gap-2 w-full p-2 px-3 hover:bg-darken cursor-pointer transition-all duration-200
+  }
+  .gallery_wrapper {
+    @apply flex z-[1000] fixed inset-0 items-center justify-center  bg-black bg-opacity-60
+  }
+
+  .header_search_wrapper {
+    @apply md:flex hidden items-center max-w-[50%] bg-light flex-grow gap-2 px-3 rounded-lg
+  }
+
+  .header_search_input {
+    @apply bg-transparent h-[30px] text-xs border-secondary rounded-md placeholder-white placeholder-opacity-50 text-white focus:ring-0
+  }
+
+  .brigth_avatar {
+    @apply avatar brightness-75 hover:brightness-95 rounded-md transition-all duration-200 cursor-pointer
+  }
+
+  .answear_sidebar_wrapper {
+    @apply flex flex-col h-full z-50 right-0 bg-white lg:relative transition-all duration-300 absolute flex-shrink-0  w-[380px] border-l border-gray-300
+  }
+
+  .file_icon_wrapper {
+    @apply p-2 border border-gray-400 rounded-full hover:bg-gray-100 transition-all duration-200 cursor-pointer
+  }
+
+  .image_overlay {
+    @apply inset-0 z-10 bg-black absolute hover:opacity-100 opacity-0 bg-opacity-40 flex items-center h-full justify-center
+  }
+
+  .some_overlay {
+    @apply inset-0 z-10 absolute bg-black bg-opacity-40 flex items-center h-full justify-center
+  }
+
+  .datails_wrapper {
+    @apply flex items-center gap-2 transition-all active:scale-90 duration-200 hover:bg-gray-100 rounded cursor-pointer p-2
+  }
+
+  .droplist_wrapper {
+    @apply absolute transform translate-x-14 translate-y-14 lg:translate-y-0 lg:-translate-x-56 transition-all duration-300
+  }
+
+  .absoluteWrapper {
+    @apply absolute -top-[100px] z-10 left-0 transition-all duration-300
+  }
+
+  .emoji_picker_wrapper {
+    @apply overflow-scroll scrollbar-none bg-white grid grid-cols-5 w-[200px] h-[53px] rounded-xl border-gray-400 border-2 drop-shadow-lg
+  }
+
+  .sidebar_something {
+    @apply text-white text-opacity-50 text-2xl font-medium transform transition-all duration-200
+  }
+
+  .room_wrapper {
+    @apply p-[15px] py-[6px] flex-grow-0 flex items-center justify-between w-full border-b  border-gray-300
+  }
+
+  .pointer_text {
+    @apply  absolute bg-transparent inset-0 flex hover:opacity-60 items-center justify-center
+  }
 }

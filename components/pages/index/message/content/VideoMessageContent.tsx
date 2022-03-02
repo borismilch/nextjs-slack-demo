@@ -1,10 +1,13 @@
-import { IMessage } from '@/models/.';
-import { IVideoMessage } from '@/models/chat/Imessage';
+import { IVideoMessage } from 'models/chat/Imessage';
 import React from 'react';
 
-const VideoMessageContent: React.FC<{message: IVideoMessage}> = ({message}) => {
+interface VideoMessageContentProps {
+  message: IVideoMessage
+}
+
+const VideoMessageContent: React.FC<VideoMessageContentProps> = ({message}) => {
   return (
-    <div className='relative w-[270px] h-[150px]'>
+    <div data-testid="video_message" className='relative w-[270px] h-[150px]'>
 
       <video 
         src={message.body.url} 

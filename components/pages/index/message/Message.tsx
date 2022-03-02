@@ -1,32 +1,40 @@
 import React from 'react';
 import Image from 'next/image'
 
-import { IMessage, IReaction } from '@/models/.'
+import { IMessage, IReaction } from 'models/.'
 import { useAuthState } from 'react-firebase-hooks/auth'
-import { auth } from '@/lib/firebase'
+import { auth } from 'lib/firebase'
 
 import { MessageIcons, MessageReactions, MessageAnswears } from '..'
 import { useCollection } from 'react-firebase-hooks/firestore'
 
-import { firestore } from '@/lib/firebase'
+import { firestore } from 'lib/firebase'
 import { collection } from 'firebase/firestore'
-
-import { observer } from 'mobx-react-lite'
-
-import { RoomStore } from '@/store/.'
 import { TextMessageContent, MessageHeader, ImageMessageContent, VideoMessageContent , DocumentMessageContent} from './content';
 
-const Message: React.FC<{message: IMessage, showAnswears?: boolean, isAnswear?: boolean}> = 
-  ({message, showAnswears = true, isAnswear = false}) => {
+import { useAppSelector } from 'hooks/redux'
+import { roomIdSelector } from 'redux/selectors'
+
+interface MessageProps {
+  message: IMessage, 
+  showAnswears?: boolean, 
+  isAnswear?: boolean
+}
+
+const Message: React.FC<MessageProps> = (props) => {
+  const {message, showAnswears = true, isAnswear = false} = props
+  const roomId = useAppSelector(roomIdSelector)
 
   const [reactions] = useCollection(collection(
-    firestore, 'rooms', RoomStore.roomId, 'messages', message.id, 'reactions'
+    firestore, 'rooms', roomId || 'ggh', 'messages', message.id, 'reactions'
   ))
 
   const [user] = useAuthState(auth)
 
   return (
-    <div className={'message rounded-md mb-3 relative group  mx-0 ' + (user?.uid === message.userId && ' mx-3 bg-gray-50')}>
+    <div 
+      data-testid="message_item"
+      className={'message rounded-md mb-3 relative group  mx-0 ' + (user?.uid === message.userId && ' mx-3 bg-gray-50')}>
 
       <div className='avatar hidden rounded md:flex'>
         <Image 
@@ -44,7 +52,7 @@ const Message: React.FC<{message: IMessage, showAnswears?: boolean, isAnswear?: 
           <MessageHeader message={message} />
 
           { message.role === 'text' ? 
-           (<TextMessageContent message={message} />) : 
+          (<TextMessageContent message={message as any} />) : 
           
            message.role === 'video' ?
            (<VideoMessageContent message={message as any} />) :
@@ -57,22 +65,25 @@ const Message: React.FC<{message: IMessage, showAnswears?: boolean, isAnswear?: 
 
         </div>
 
-        <MessageReactions reactions={reactions?.docs?.map(item => ({ ...item.data(), id: item.id })) as IReaction[]} />
+        <MessageReactions 
+          reactions={reactions?.docs?.
+            map(item => ({ ...item.data(), id: item.id })) as IReaction[]} 
+        />
 
         { showAnswears && <MessageAnswears messageId={message.id} /> }
 
       </div>
 
-      
-
-     { !isAnswear && <div className='message_toolbar'>
-
-        <MessageIcons message = {message}  reactions={reactions?.docs?.map(item => ({ ...item.data(), id: item.id })) as IReaction[]} />
-
-      </div>}
+       { !isAnswear && <div data-testid="message_toolbar" className='message_toolbar'>
+          <MessageIcons 
+            message = {message} 
+            reactions={reactions?.docs?.
+            map(item => ({ ...item.data(), id: item.id })) as IReaction[]} 
+          />
+        </div>}
 
     </div>
   )
 };
 
-export default observer(Message);
+export default Message

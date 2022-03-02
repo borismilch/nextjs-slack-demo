@@ -1,40 +1,36 @@
 import React from 'react';
-import { observer } from 'mobx-react-lite'
 
-import { RoomStore, AnswearStore } from '@/store/.'
-import { firestore } from '@/lib/firebase'
+import { firestore } from 'lib/firebase'
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { collection } from 'firebase/firestore'
+import { useAppSelector, useAppDispatch } from 'hooks/redux';
+import { AnswearSliceActions } from 'redux/actions';
+import { roomIdSelector } from 'redux/selectors';
 
-import Image from 'next/image'
+import { DumbMessageAnswears } from './dumb/'
+import { IMessage } from 'models';
 
-const MessageAnswears: React.FC<{messageId: string}> = ({messageId}) => {
+interface MessageAnswearProps {
+  messageId: string
+}
 
-  const [answears] = useCollectionData(collection(firestore, 'rooms', RoomStore.roomId, 'messages', messageId, 'answears'))
+const MessageAnswears: React.FC<MessageAnswearProps> = ({messageId}) => {
+  const roomId = useAppSelector(roomIdSelector)
+  const [answears] = useCollectionData(collection(firestore, 'rooms', roomId || 'some', 'messages', messageId, 'answears'))
+  const dispatch = useAppDispatch()
+
+  const commentMessage = () => {
+    dispatch(AnswearSliceActions.commentMessage(messageId))
+  }
 
   return (
-    <>
-    
-    { answears?.length > 0 &&  <div className='flex items-center gap-1 py-2'>
-        <div className='small_avatar'>
-
-          <Image 
-            src={answears[0].userImage}
-            layout='fill'
-            objectFit='cover'
-            alt='ddddd'
-          />
-
-        </div>
-
-        <p 
-          onClick={() => AnswearStore.commentMessage(messageId)}
-          className='answear_link'
-        >{answears.length} answears</p>
-      </div>}
-
-    </>
+   <>
+     <DumbMessageAnswears
+        answears={answears as IMessage[]} 
+        commentMessage={commentMessage} 
+      />
+   </>
   )
 };
 
-export default observer(MessageAnswears);
+export default MessageAnswears

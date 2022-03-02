@@ -1,10 +1,7 @@
 import Head from "next/head";
 import React from "react";
-import Header from "./Header";
-
+import Header from "./header/Header";
 import {Sidebar} from './sidebar/'
-
-import Footer from './Footer'
 
 const Layout: React.FC<{title: string}> = ({ children, title }) => {
   return (
@@ -17,7 +14,6 @@ const Layout: React.FC<{title: string}> = ({ children, title }) => {
         </>
       </Head>
 
-
       <Header />
 
       <div className='flex w-full h-[94.4vh]'>
@@ -28,8 +24,6 @@ const Layout: React.FC<{title: string}> = ({ children, title }) => {
 
       </div>
    
-      
-      <Footer/>
     </div>
   );
 };

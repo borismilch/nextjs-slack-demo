@@ -2,22 +2,30 @@ import React from 'react';
 import { AiFillCaretDown } from 'react-icons/ai';
 import { IoIosSend } from 'react-icons/io';
 
-const ButtonGroup: React.FC<{onClickFirst: () => void, onClickSecond: () => void, disabled: boolean}> = ({onClickFirst, onClickSecond, disabled}) => {
+interface ButtonGroupProps {
+  onClickFirst: () => void, 
+  onClickSecond: () => void, 
+  disabled: boolean
+}
+
+const ButtonGroup: React.FC<ButtonGroupProps> = (props) => {
+
+  const {onClickFirst, onClickSecond, disabled} = props
+
   return (
     <div 
-    className="
-      flex items-center transition-all overflow-hidden duration-200 disabled:bg-gray-200 hover:bg-green-600 rounded-md 
-    ">
+    className="button_group">
 
     <button
+      data-testid="first"
        disabled={disabled}
-       onClick={onClickFirst.bind(null)}
+       onClick={(e) => {e.preventDefault(); onClickFirst()}}
        className='button_item px-4'>
       <IoIosSend className="text-white text-xl" />
     </button>
-  
 
     <button 
+      data-testid="second"
       disabled={disabled}
       onClick={onClickSecond.bind(null)}
       className='button_item border-opacity-60 md:flex hidden'>

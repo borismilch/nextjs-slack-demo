@@ -1,10 +1,14 @@
 
-import { IMessage } from '@/models/.';
+import { TextMessage } from 'models';
 import React from 'react';
 
-const MessageContent: React.FC<{message: IMessage}> = ({message}) => {
+interface MessageContentProps {
+  message: TextMessage
+}
+
+const MessageContent: React.FC<MessageContentProps> = ({message}) => {
   return (
-      <div className='flex flex-col '>
+      <div data-testid="text_message" className='flex flex-col '>
 
         <div className='flex items-center'>
           
